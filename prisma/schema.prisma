@@ -1,0 +1,238 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  clerkId   String   @unique
+  name      String?
+  bio       String?
+  image     String?
+  location  String?
+  website   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  blogs         Blog[]
+  questions     Question[]
+  comments      Comment[]
+  likes         Like[]
+  followers     Follows[]      @relation("following")
+  following     Follows[]      @relation("follower")
+  notifications Notification[] @relation("userNotifications")
+  tags          Tag[] // Tags user likes for content discovery
+  savedBlogs    SavedBlog[] // Blogs saved by the user
+  spaces        Space[] // Spaces created by the user
+  spaceMembers  SpaceMember[]
+  Notification  Notification[]
+}
+
+model Blog {
+  id        String   @id @default(cuid())
+  authorId  String
+  title     String
+  content   String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  tags         Tag[] // Tags associated with the blog
+  comments     Comment[]
+  likes        Like[]
+  savedBy      SavedBlog[]
+  Notification Notification[]
+}
+
+model SavedBlog {
+  id        String   @id @default(cuid())
+  userId    String
+  blogId    String
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blogId]) // Prevent duplicate saved blogs
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  authorId  String
+  title     String
+  content   String
+  image     String? // Optional image for the question
+  spaceId   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  space        Space?         @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  tags         Tag[] // Tags associated with the question
+  comments     Comment[]
+  likes        Like[]
+  Notification Notification[]
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  authorId   String
+  blogId     String?
+  questionId String?
+  isAnswer   Boolean  @default(false) // Differentiates answers from comments
+  createdAt  DateTime @default(now())
+
+  // Relations
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  blog         Blog?          @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  question     Question?      @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  likes        Like[] // Likes on comments or answers
+  Notification Notification[]
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  blogId     String?
+  questionId String?
+  commentId  String?
+  userId     String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  comment  Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blogId, questionId, commentId]) // Prevent duplicate likes
+}
+
+model Space {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  creatorId   String
+  createdAt   DateTime @default(now())
+
+  // Relations
+  creator   User          @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  members   SpaceMember[] // Users who joined this space
+  questions Question[] // Questions asked in this space
+}
+
+model SpaceMember {
+  id       String   @id @default(cuid())
+  userId   String
+  spaceId  String
+  joinedAt DateTime @default(now())
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, spaceId]) // Prevent duplicate membership
+}
+
+model Follows {
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  // Relations
+  follower  User @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId]) // Composite primary key prevents duplicate follows
+}
+
+model Notification {
+  id         String           @id @default(cuid())
+  userId     String
+  creatorId  String
+  type       NotificationType
+  read       Boolean          @default(false)
+  blogId     String?
+  questionId String?
+  commentId  String?
+  createdAt  DateTime         @default(now())
+
+  // Relations
+  user     User      @relation("userNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  creator  User      @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  comment  Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt]) // Add an index on userId and createdAt
+}
+
+enum Tag {
+  MOVIE
+  HORROR
+  SCIFI
+  TECH
+  TRAVEL
+  LIFESTYLE
+  HEALTH
+  FITNESS
+  EDUCATION
+  BUSINESS
+  FINANCE
+  ENTERTAINMENT
+  FOOD
+  ART
+  DESIGN
+  MUSIC
+  WRITING
+  PERSONAL_DEVELOPMENT
+  PRODUCTIVITY
+  PHOTOGRAPHY
+  MARKETING
+  SPORTS
+  POLITICS
+  ENVIRONMENT
+  SPIRITUALITY
+  HISTORY
+  GAMING
+  PARENTING
+  SCIENCE
+  NATURE
+  FASHION
+  DIY
+  CAREER
+  SOCIAL_MEDIA
+  BOOKS
+  STARTUPS
+  PSYCHOLOGY
+  SELF_IMPROVEMENT
+  MENTAL_HEALTH
+  NEWS
+  MEMES
+  ANIME
+  CULTURE
+}
+
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOW
+}
