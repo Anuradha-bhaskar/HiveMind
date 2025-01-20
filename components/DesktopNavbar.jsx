@@ -26,12 +26,7 @@ async function DesktopNavbar() {
                             Spaces 
                         </Button>
                     </Link>
-                    <Link href={"/notification"}>
-                        <Button variant={"ghost"}>
-                            <SquarePen />
-                            Write
-                        </Button>
-                    </Link>
+
                     <Link href={"/notification"}>
                         <Button variant={"ghost"}>
                             <Bell />
