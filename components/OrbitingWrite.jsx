@@ -3,7 +3,7 @@ import Link from "next/link";
 const OrbitingTexts = () => {
     return (
        
-        < Link href={"/write"} className = "hidden md:block relative" >
+        < Link href={"/new-story"} className = "hidden md:block relative" >
           <svg
             viewBox="0 0 200 200"
             width="200"

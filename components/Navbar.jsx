@@ -3,13 +3,16 @@ import DesktopNavbar from './DesktopNavbar'
 import MobileNavbar from './MobileNavbar'
 import Link from 'next/link'
 import { currentUser } from '@clerk/nextjs/server'
-// import { syncAction } from '@/actions/userAction'
+import { syncAction } from '@/actions/userActions'
 async function Navbar() {
     const user = await currentUser()
-    // console.log("In the navbar")
+    console.log("In the navbar")
     if (user) {
-        // const result = await syncAction()
-        // console.log(result)
+        const result = await syncAction();
+        if (result.success) {
+            console.log("user in table")
+        }
+        console.log(result.message)
     }
     return (
         <div className='sticky top-0 border-b  '>
