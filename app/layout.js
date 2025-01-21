@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         <body>
           <div className="min-h-screen">
             <Navbar />
-            <main className="py-8"> 
+            <main className=""> 
                     {children}
                     <Toaster />
                 

@@ -42,3 +42,39 @@ export async function syncAction() {
     }
 
 }
+
+export async function userByUsername(params) {
+    try {
+     const username=params
+        if (!username) {
+            console.log("username not found")
+            return { success: false, message: "Username have not received " }
+        }
+        const user = await prisma.user.findUnique({
+            where: {
+                username: username,
+            },
+            include: {
+                _count: {
+                    select: {
+                        followers: true, // Counts users who are following this user
+                        following: true, // Counts users this user is following
+                    },
+                },
+            },
+        });
+
+        if (user) {
+
+            return { success: true, message: user }
+
+        }
+
+    } catch (error) {
+        console.log("Error while fetching user by username")
+        return { success: false, message: error }
+
+    }
+
+
+}
