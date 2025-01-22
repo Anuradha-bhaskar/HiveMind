@@ -8,7 +8,7 @@ const OrbitingTexts = () => {
             viewBox="0 0 200 200"
             width="200"
             height="200" 
-            // className="text-lg tracking-widest animate-spin duration-[10s]"
+            // className="text-lg tracking-widest animate-spin duration-[20s]"
             className="text-lg tracking-widest"
           >
             <path

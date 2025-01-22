@@ -3,7 +3,25 @@ import { userByUsername } from '@/actions/userActions';
 import { Button } from "@/components/ui/button"; // Adjust the path if needed
 import { Pencil } from "lucide-react";
 
+import { saveChangesOfProfile } from '@/actions/userActions';
+import toast from 'react-hot-toast';
+import EditDialog from './EditDialog';
+
+// import EditProfile from './EditProfile';
 async function RightProfile({ username }) {
+    // const [name, setName] = useState("");
+    // const [bio, setBio] = useState("");
+    // const [website, setWebsite] = useState("");
+    // const [location, setLocation] = useState("");
+    // const handleSaveChanges = async() => {
+    //     const result = await saveChangesOfProfile({ name, bio, location, username, website });
+    //     if (result.success) {
+    //         toast.success(result.message)
+    //     } else {
+    //         toast.error(result.message)
+    //     }
+        
+    // }
     const result = await userByUsername(username);
 
     if (!result.success) {
@@ -61,10 +79,8 @@ async function RightProfile({ username }) {
                 </p>
 
             </div>
-            <Button size="sm" variant="default" className="flex items-center space-x-2">
-                <Pencil className="w-4 h-4" /> {/* Icon */}
-                <span>Edit Profile</span>
-            </Button>
+<EditDialog username={username}/>
+           
         </div>
     );
 }

@@ -16,6 +16,7 @@ export async function syncAction() {
         })
         if (alreadyUser) {
             return { success: false, message: "user already exists" }
+            th
         }
         const newUser = await prisma.user.create({
             data: {
@@ -36,8 +37,7 @@ export async function syncAction() {
         }
 
     } catch (error) {
-        console.log("Something went wrong while syncing a user ", error)
-
+        // console.log("Something went wrong while syncing a user ", error)
         return { success: false, message: error }
     }
 
@@ -75,6 +75,34 @@ export async function userByUsername(params) {
         return { success: false, message: error }
 
     }
+}
 
+export async function saveChangesOfProfile(params) {
+    try {
+        const { name, bio, location, website, username } = params;
+        const user = await prisma.user.update({
+            where: {
+                username: username
 
+            },
+            data: {
+                name: name,
+                bio: bio,
+                website: website,
+                location: location
+            }
+        })
+        if (user) {
+            console.log("Done changes in the user profile : ", user)
+            return { success: true, message: "profile updated successfully " }
+        }
+        
+    } catch (error) {
+        return { success: false, message: "Something went wrong while updating profile " }
+
+    }
+    
+    
+
+    
 }

@@ -9,6 +9,8 @@ import { SquarePen } from 'lucide-react';
 
 async function DesktopNavbar() {
     const user = await currentUser();
+    const username = user.emailAddresses[0].emailAddress.split("@")[0];
+
     return (
         <div className='hidden md:block'>
 
@@ -33,7 +35,7 @@ async function DesktopNavbar() {
                             Notifications
                         </Button>
                     </Link>
-                    <Link href={"/"}>
+                    <Link href={`/profile/${username}`}>
                         <Button variant={"ghost"}>
                             <CircleUser />
                             Profile
