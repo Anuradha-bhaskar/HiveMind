@@ -45,7 +45,8 @@ export async function syncAction() {
 
 export async function userByUsername(params) {
     try {
-     const username=params
+        const username = params
+        console.log(username)
         if (!username) {
             console.log("username not found")
             return { success: false, message: "Username have not received " }

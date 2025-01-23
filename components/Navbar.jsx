@@ -15,7 +15,7 @@ async function Navbar() {
         console.log(result.message)
     }
     return (
-        <div className='sticky top-0 border-b bg-white m-0'>
+        <div className='sticky top-0 border-b bg-white m-0 z-10'>
             <div className='flex justify-around h-16 items-center '>
 
                 <div className='flex items-center'>

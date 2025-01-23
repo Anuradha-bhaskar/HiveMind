@@ -1,27 +1,11 @@
 import React from 'react';
 import { userByUsername } from '@/actions/userActions';
-import { Button } from "@/components/ui/button"; // Adjust the path if needed
-import { Pencil } from "lucide-react";
 
-import { saveChangesOfProfile } from '@/actions/userActions';
 import toast from 'react-hot-toast';
 import EditDialog from './EditDialog';
 
-// import EditProfile from './EditProfile';
 async function RightProfile({ username }) {
-    // const [name, setName] = useState("");
-    // const [bio, setBio] = useState("");
-    // const [website, setWebsite] = useState("");
-    // const [location, setLocation] = useState("");
-    // const handleSaveChanges = async() => {
-    //     const result = await saveChangesOfProfile({ name, bio, location, username, website });
-    //     if (result.success) {
-    //         toast.success(result.message)
-    //     } else {
-    //         toast.error(result.message)
-    //     }
-        
-    // }
+    
     const result = await userByUsername(username);
 
     if (!result.success) {
