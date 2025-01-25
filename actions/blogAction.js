@@ -45,3 +45,22 @@ export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags
         return { success: false, message: "Something went wrong while creating blogs" }
     }
 }
+
+export async function getBlogById(params) {
+    try {
+        const blogId = params;
+        if (!blogId) {
+            return {success :false , message:"Blog Id is required"}
+        }
+
+        const blog = await prisma.blog.findUnique({
+            where: {
+                id:blogId
+            }
+        })
+        return {success:true, message:blog}
+    } catch (error) {
+        console.log("Error,",error)
+        return { success: false, message: "Something went wrong while fetching blog" }
+    }
+}
