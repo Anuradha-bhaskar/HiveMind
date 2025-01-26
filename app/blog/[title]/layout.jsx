@@ -1,9 +1,9 @@
 import React from 'react'
- function layout({ children }) {
-   
+function layout({ children }) {
+
   return (
-      <div>
-       
+    <div>  
+      
       {children}
     </div>
   )

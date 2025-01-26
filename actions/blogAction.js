@@ -64,3 +64,27 @@ export async function getBlogById(params) {
         return { success: false, message: "Something went wrong while fetching blog" }
     }
 }
+
+export async function postComments(params) {
+
+    console.log("----inside the post comment actions",params)
+    try {
+        const { authorId, blogId, comment } = params;
+        console.log("-- inside the try and catch : ",{authorId, blogId, comment})
+        const commentc = await prisma.comment.create({
+            data: {
+                authorId: authorId,
+                blogId: blogId,
+                content: comment,
+                isAnswer:false
+            }
+        })
+        if (commentc) {
+            return { success: true, message: "Comment posted successfully" }
+        } else {
+            return { success: false, message: "Something went wrong while posting comment" }
+        }
+    } catch (error) {
+        console.log("Something went wronng inn action of comment : ")
+    }
+}
