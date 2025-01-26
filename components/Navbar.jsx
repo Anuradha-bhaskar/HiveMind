@@ -19,7 +19,8 @@ async function Navbar() {
             <div className='flex justify-around h-16 items-center '>
 
                 <div className='flex items-center'>
-                    <Link href={"/"} className=' text-xl lg:text-2xl font-mono tracking-tighter text-primary font-bold '>HiveMind</Link>
+                    <Link href={"/"} className=' text-xl lg:text-2xl font-mono tracking-tighter text-primary font-bold '>
+                    HiveMind</Link>
                 </div>
                 <div className='flex items-center'>
                     <DesktopNavbar />

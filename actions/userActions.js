@@ -78,6 +78,41 @@ export async function userByUsername(params) {
     }
 }
 
+export async function userById(params) {
+    try {
+        const id =params 
+        console.log(id)
+        if (!id) {
+            console.log("id not found")
+            return { success: false, message: "not id received" }
+        }
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id,
+            },
+            include: {
+                _count: {
+                    select: {
+                        followers: true, // Counts users who are following this user
+                        following: true, // Counts users this user is following
+                    },
+                },
+            },
+        });
+
+        if (user) {
+
+            return { success: true, message: user }
+        }
+    } catch (error) {
+        console.log("Error while fetching user by id")
+        return { success: false, message: error }
+
+    }
+}
+
+
+
 export async function saveChangesOfProfile(params) {
     try {
         const { name, bio, location, website, username } = params;

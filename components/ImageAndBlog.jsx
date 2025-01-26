@@ -6,7 +6,7 @@ function ImageAndBlog({ imageUrl, blog }) {
         <article className="max-w-3xl mx-auto px-4 py-8">
             {/* Featured Image with gradient overlay */}
             <div className="relative h-[400px] mb-12 rounded-2xl overflow-hidden shadow-xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent "></div>
                 <img
                     src={imageUrl}
                     alt="Blog featured image"
