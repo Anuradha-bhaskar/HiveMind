@@ -11,6 +11,9 @@ async function Navbar() {
         const result = await syncAction();
         if (result.success) {
             console.log("user in table")
+        } else {
+            console.log("user not in table")
+            return
         }
         console.log(result.message)
     }

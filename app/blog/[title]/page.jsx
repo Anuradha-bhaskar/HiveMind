@@ -5,6 +5,7 @@ import AuthorInBlog from '@/components/AuthorInBlog'
 import BlogComment from '@/components/BlogComment'
 import { getBlogById } from '@/actions/blogAction'
 import ImageAndBlog from '@/components/ImageAndBlog'
+import CommentSectionBlog from '@/components/CommentSectionBlog'
 async function page({ params }) {
   const route = params.title
   const arrayOfRoute = route.split(`-`)
@@ -26,10 +27,10 @@ const blogData=result.message
           tags={tags}
           dateOfPublished="March 15, 2024"
         />
-        <AuthorInBlog  />
+        <AuthorInBlog  authorId={authorId}/>
         <ImageAndBlog imageUrl={image} blog={content} />
         <BlogComment authorId={authorId} blogId={id} />
-        {/* Show all comments here */}
+        <CommentSectionBlog blogId={id} />
       </div>
     </div>
 

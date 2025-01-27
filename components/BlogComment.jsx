@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
 import { postComments } from '@/actions/blogAction'
+import { useRouter } from "next/router";
 import toast from 'react-hot-toast'
 function BlogComment({ authorId, blogId }) {
+  
     console.log("Author id and blog id in blog comment:", { authorId, blogId })
     const [comment, setComment] = useState('');
+    
 
 const handlePostComment = async (e) => {
     e.preventDefault();
@@ -15,7 +18,8 @@ const handlePostComment = async (e) => {
         const result = await postComments({ authorId, blogId, comment });
         
         if(result.success) {
-           toast.success(result.message);
+            toast.success(result.message);
+            window.location.reload();
         } else {
             toast.error(result.message);
         }

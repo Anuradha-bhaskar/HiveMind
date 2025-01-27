@@ -88,3 +88,24 @@ export async function postComments(params) {
         console.log("Something went wronng inn action of comment : ")
     }
 }
+
+export async function getComments(params) { 
+    try {
+        const blogId = params;
+        if (!blogId) {
+            return {success:false,message:"Blog id not found in blogActions"}
+        }
+        const comments = await prisma.comment.findMany({
+            where: { blogId: blogId },
+            include: { author: true },
+            orderBy: { createdAt: 'desc' },
+        });
+        if (comments) {
+            return {success:true,message:comments}
+        }
+    } catch (error) {
+        console.log("Error while fetching comments in blogActions")
+        return { success: false, message: "Something went wrong while fetching comments" }
+        
+    }
+}
