@@ -6,16 +6,13 @@ import { currentUser } from '@clerk/nextjs/server'
 import { syncAction } from '@/actions/userActions'
 async function Navbar() {
     const user = await currentUser()
-    console.log("In the navbar")
+    // console.log("In the navbar")
     if (user) {
         const result = await syncAction();
         if (result.success) {
             console.log("user in table")
-        } else {
-            console.log("user not in table")
-            return
-        }
-        console.log(result.message)
+        } 
+        // console.log(result.message)
     }
     return (
         <div className='sticky top-0 border-b bg-white m-0 z-10'>

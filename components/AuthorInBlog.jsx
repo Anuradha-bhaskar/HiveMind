@@ -7,7 +7,7 @@ import { ShimmerButton } from './ui/shimmer-button'
 async function AuthorInBlog({ authorId }) {
   const result = await userById(authorId)
   if (result.success) {
-    console.log("Author Data:", result.message)
+    // console.log("Author Data:", result.message)
   } else {
     console.log("Error:", result.message)
   }

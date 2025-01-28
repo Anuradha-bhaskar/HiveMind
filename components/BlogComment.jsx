@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
 import { postComments } from '@/actions/blogAction'
-import { useRouter } from "next/router";
+
 import toast from 'react-hot-toast'
 function BlogComment({ authorId, blogId }) {
   

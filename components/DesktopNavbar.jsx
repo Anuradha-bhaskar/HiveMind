@@ -5,15 +5,13 @@ import { SignedIn, UserButton, SignInButton, SignedOut, SignUpButton } from "@cl
 import { currentUser } from '@clerk/nextjs/server'
 import { Button } from './ui/button';
 import { UsersRound } from 'lucide-react';
-import { SquarePen } from 'lucide-react';
+
 
 async function DesktopNavbar() {
     const user = await currentUser();
-    const username = user.emailAddresses[0].emailAddress.split("@")[0];
-
+    // console.log("User in desktop navbar", user);
     return (
         <div className='hidden md:block'>
-
             {
                 user ? <div className=' flex gap-x-4'>
                     <Link href={"/"}>
@@ -35,7 +33,7 @@ async function DesktopNavbar() {
                             Notifications
                         </Button>
                     </Link>
-                    <Link href={`/profile/${username}`}>
+                    <Link href={`/profile/${user.emailAddresses[0].emailAddress.split("@")[0]}`}>
                         <Button variant={"ghost"}>
                             <CircleUser />
                             Profile

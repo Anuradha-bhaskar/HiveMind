@@ -58,8 +58,8 @@ export async function userByUsername(params) {
             include: {
                 _count: {
                     select: {
-                        followers: true, // Counts users who are following this user
-                        following: true, // Counts users this user is following
+                        followers: true, 
+                        following: true, 
                     },
                 },
             },
@@ -110,7 +110,29 @@ export async function userById(params) {
 
     }
 }
+export async function userByClerkId(params) {
+    try {
+        const clerkId = params
+        console.log(clerkId)
+        if (!clerkId) {
+            console.log("clerkId not found")
+            return { success: false, message: "clerkId not found" }
+        }
+        const user = await prisma.user.findUnique({
+            where: {
+                clerkId: clerkId,
+            }
+        });
+        if (user) {
+            return { success: true, message: user }
+        }
 
+    } catch (error) {
+        console.log("Error while fetching user by clerkId")
+        return { success: false, message: error }
+
+    }
+}
 
 
 export async function saveChangesOfProfile(params) {
@@ -129,7 +151,7 @@ export async function saveChangesOfProfile(params) {
             }
         })
         if (user) {
-            console.log("Done changes in the user profile : ", user)
+            // console.log("Done changes in the user profile : ", user)
             return { success: true, message: "profile updated successfully " }
         }
         
