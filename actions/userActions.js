@@ -110,6 +110,7 @@ export async function userById(params) {
 
     }
 }
+
 export async function userByClerkId(params) {
     try {
         const clerkId = params
@@ -133,7 +134,6 @@ export async function userByClerkId(params) {
 
     }
 }
-
 
 export async function saveChangesOfProfile(params) {
     try {

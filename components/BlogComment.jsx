@@ -30,7 +30,7 @@ const handlePostComment = async (e) => {
     }
 }
   return (
-      <div>
+      <div id='comment-section'>
           <div className="space-y-6">
               <h2 className="text-2xl font-bold">Comments</h2>
               <form  className="space-y-4">

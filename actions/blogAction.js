@@ -59,7 +59,7 @@ export async function getBlogById(params) {
         })
         return { success: true, message: blog }
     } catch (error) {
-        console.log("Error,", error)
+        // console.log("Error,", error)
         return { success: false, message: "Something went wrong while fetching blog" }
     }
 }
@@ -111,7 +111,6 @@ export async function getComments(params) {
     }
 }
 
-
 export async function toggleCommentLike(params) {
     try {
         const user = await currentUser();
@@ -154,4 +153,53 @@ export async function toggleCommentLike(params) {
         return { success: false, message: "Something went wrong while toggling like" }
 
     }
+}
+
+export async function checkLikedBlog({ userId, blogId }) {
+    try {
+        const result = await prisma.like.findFirst({ where: { userId: userId, blogId: blogId } })
+        if (result) {
+            return { success: true }
+        }
+        else {
+            return { success: false }
+        }
+    } catch (error) {
+        console.log("something went wrong while checking liked")
+        return { success: false }
+    }
+    
+}
+
+export async function toggleBlogLike(userId, blogId) {
+    try {
+        
+        const existingLike = await prisma.like.findFirst({
+            where: {
+                userId: userId,
+                blogId: blogId
+            }
+        })
+        if (existingLike) {
+            await prisma.like.delete({
+                where: {
+                    id: existingLike.id
+                }
+            })
+        }
+        else {
+            await prisma.like.create({
+                data: {
+                    userId: userId,
+                    blogId: blogId
+                }
+            })
+        }
+        return { success: true, message: "Like toggled successfully" }
+    } catch (error) {
+        console.log("Error while toggling like in blogActions")
+        return { success: false, message: "Something went wrong while toggling like" }
+
+    }
+    
 }

@@ -8,9 +8,11 @@ import CommentSectionBlog from "@/components/CommentSectionBlog";
 import { currentUser } from "@clerk/nextjs/server"; // Update this if you're using a different service
 import { userByUsername } from "@/actions/userActions";
 import { getComments } from "@/actions/blogAction";
+import BlogActions from "@/components/BlogActions";
+
 
 async function page({ params }) {
-  const route = params.title;
+  const route =await  params.title;
   const arrayOfRoute = route.split("-");
   const blogId = arrayOfRoute[arrayOfRoute.length - 1];
   console.log("Blog id will be: ", blogId);
@@ -39,11 +41,22 @@ async function page({ params }) {
     console.error("Error fetching userId:", error);
   }
 
+
+
+  const scrollToComment = () => {
+    const sectionB = document.getElementById("component-b");
+    if (sectionB) {
+      sectionB.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="min-h-screen flex justify-center items-start">
       <div className="w-full max-w-4xl px-4 py-8 bg-white">
         <BlogHeader title={title} tags={tags} dateOfPublished="March 15, 2024" />
+        <BlogActions userId={ userId} blogId={blogId} />
         <AuthorInBlog authorId={authorId} />
+        
         <ImageAndBlog imageUrl={image} blog={content} />
         <BlogComment authorId={authorId} blogId={id} />
         {/* Pass userId to CommentSectionBlog */}
