@@ -175,7 +175,6 @@ export async function checkFollowing(userId, authorId) {
         return { success: false, message: "Something went wrong while checking following" };
     }
 }
-
 export async function toggleFollow(userId, authorId) { 
 
     try {

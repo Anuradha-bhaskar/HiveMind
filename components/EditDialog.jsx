@@ -20,12 +20,13 @@ import { useState } from 'react'
 import { saveChangesOfProfile } from '@/actions/userActions'
 
 
-function EditDialog({ username }) {
+function EditDialog({ user }) {
     const router = useRouter();
      const [name, setName] = useState("");
     const [bio, setBio] = useState("");
     const [website, setWebsite] = useState("");
     const [location, setLocation] = useState("");
+    const {username}=user
     const handleSaveChanges = async () => {
         try {
             const result = await saveChangesOfProfile({ name, bio, location, username, website });

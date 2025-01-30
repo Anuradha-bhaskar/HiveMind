@@ -27,12 +27,12 @@ async function DesktopNavbar() {
                         </Button>
                     </Link>
 
-                    <Link href={"/notification"}>
+                    {/* <Link href={"/notification"}>
                         <Button variant={"ghost"}>
                             <Bell />
                             Notifications
                         </Button>
-                    </Link>
+                    </Link> */}
                     <Link href={`/profile/${user.emailAddresses[0].emailAddress.split("@")[0]}`}>
                         <Button variant={"ghost"}>
                             <CircleUser />

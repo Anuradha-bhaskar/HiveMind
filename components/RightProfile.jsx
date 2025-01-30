@@ -1,19 +1,10 @@
 import React from 'react';
-import { userByUsername } from '@/actions/userActions';
 
-import toast from 'react-hot-toast';
 import EditDialog from './EditDialog';
 
-async function RightProfile({ username }) {
+async function RightProfile({ user }) {
     
-    const result = await userByUsername(username);
-
-    if (!result.success) {
-        return <div className="text-red-500 text-center py-4">User not found</div>;
-    }
-
-    const user = result.message;
-    console.log("User : ", user);
+   
 
     return (
         <div className="flex flex-wrap items-center gap-6 p-6">
@@ -63,7 +54,7 @@ async function RightProfile({ username }) {
                 </p>
 
             </div>
-<EditDialog username={username}/>
+            <EditDialog user={user} />
            
         </div>
     );

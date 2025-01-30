@@ -1,15 +1,7 @@
 import React from 'react';
-import { userByUsername } from '@/actions/userActions';
-
-async function TopLeftProfile({ username }) {
-    const result = await userByUsername(username);
-
-    if (!result.success) {
-        return <div className="text-red-500 text-center py-4">User not found</div>;
-    }
-
-    const user = result.message;
-   
+import FollowAuthorButton from './FollowAuthorButton';
+async function TopLeftProfile({ user}) {
+    
 
     return (
         <div className="flex items-center gap-6 py-5 px-10  ">
@@ -20,6 +12,7 @@ async function TopLeftProfile({ username }) {
             </div>
 
             {/* Right side: Followers and Following count */}
+            <FollowAuthorButton />
             <div className="ml-auto text-right flex flex-col">
                 <p className="text-sm text-gray-600">
                     <span className="font-semibold text-gray-800">{user._count.followers || 0}</span> Followers
