@@ -155,7 +155,7 @@ export async function toggleCommentLike(params) {
     }
 }
 
-export async function checkLikedBlog({ userId, blogId }) {
+export async function checkLikedBlog( userId, blogId ) {
     try {
         const result = await prisma.like.findFirst({ where: { userId: userId, blogId: blogId } })
         if (result) {

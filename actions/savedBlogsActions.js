@@ -1,7 +1,7 @@
 "use server"
 import prisma from "@/lib/prisma"
 
-export async function checkSavedBlog({ userId, blogId }) {
+export async function checkSavedBlog( userId, blogId ) {
     try {
         console.log("Inside the check saved blog comp ")
         const saveBlog = await prisma.savedBlog.findFirst({ where: { userId: userId, blogId: blogId } })

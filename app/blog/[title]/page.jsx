@@ -55,7 +55,7 @@ async function page({ params }) {
       <div className="w-full max-w-4xl px-4 py-8 bg-white">
         <BlogHeader title={title} tags={tags} dateOfPublished="March 15, 2024" />
         <BlogActions userId={ userId} blogId={blogId} />
-        <AuthorInBlog authorId={authorId} />
+        <AuthorInBlog authorId={authorId} userId={userId} />
         
         <ImageAndBlog imageUrl={image} blog={content} />
         <BlogComment authorId={authorId} blogId={id} />

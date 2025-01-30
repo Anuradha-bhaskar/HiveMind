@@ -42,7 +42,6 @@ export async function syncAction() {
     }
 
 }
-
 export async function userByUsername(params) {
     try {
         const username = params
@@ -77,7 +76,6 @@ export async function userByUsername(params) {
 
     }
 }
-
 export async function userById(params) {
     try {
         const id =params 
@@ -110,7 +108,6 @@ export async function userById(params) {
 
     }
 }
-
 export async function userByClerkId(params) {
     try {
         const clerkId = params
@@ -134,7 +131,6 @@ export async function userByClerkId(params) {
 
     }
 }
-
 export async function saveChangesOfProfile(params) {
     try {
         const { name, bio, location, website, username } = params;
@@ -163,4 +159,52 @@ export async function saveChangesOfProfile(params) {
     
 
     
+}
+export async function checkFollowing(userId, authorId) {
+    try {
+        const result = await prisma.follows.findFirst({
+            where: {
+                followerId: userId,
+                followingId: authorId
+            }
+        });
+
+        return { success: true, isFollowing: !!result }; // Explicitly return follow status
+    } catch (error) {
+        console.error("Error checking follow status");
+        return { success: false, message: "Something went wrong while checking following" };
+    }
+}
+
+export async function toggleFollow(userId, authorId) { 
+
+    try {
+        const existingfollow = await prisma.follows.findFirst({
+            where: {
+                followerId: userId,
+                followingId: authorId
+            }
+        })
+
+        if (existingfollow) {
+            await prisma.follows.delete({
+                where: {
+                    followerId_followingId: { // Use composite key
+                        followerId: userId,
+                        followingId: authorId
+                    }
+                }
+            })
+        } else {
+            await prisma.follows.create({
+                data: {
+                    followerId: userId,
+                    followingId: authorId
+                }
+            })
+        }
+        return { success: true, message: "Follow toggled successfully" }
+    } catch (error) {
+        return {success: false, message: "Something went wrong while toggling follow" }
+    }
 }
