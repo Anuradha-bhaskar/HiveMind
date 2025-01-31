@@ -49,4 +49,35 @@ export async function toggleBookMarked(userId , blogId) {
         console.log("Error while toggling bookmark in blogActions")
         return { success: false, message: "Something went wrong while toggling bookmark" }
     }
- }
+}
+ 
+export async function getSavedBlog(userId) {
+    try {
+     
+        const savedBlogs = await prisma.savedBlog.findMany({
+            where: {
+                userId: userId,
+            },
+            include: {
+                blog: true,
+            },
+        });
+        if (savedBlogs.length > 0) {
+            return {
+                success: true,
+                message: "Saved blogs fetched successfully",
+                data: savedBlogs
+            };
+        } else {
+            return {
+                success: false,
+                message: "No saved blogs found"
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Error fetching saved blogs: ${error.message}`
+        };
+    }
+}

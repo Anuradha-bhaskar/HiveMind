@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body>
-          <div className="min-h-screen">
+          <div className="min-h-screen bg-white">
             
             <Navbar />
             <main className=""> 

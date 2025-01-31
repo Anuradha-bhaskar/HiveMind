@@ -1,6 +1,7 @@
 import React from 'react'
-
-function SavedBlogs({userId}) {
+import { getSavedBlog } from '@/actions/savedBlogsActions'
+function SavedBlogs({ userId }) {
+     
   return (
     <div>
           Saved Blogs component
