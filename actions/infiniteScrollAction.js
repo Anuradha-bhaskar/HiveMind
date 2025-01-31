@@ -8,9 +8,11 @@ export async function fetchBlogsForInfinte(prev,limit) {
             take: limit,
             orderBy: { createdAt: "desc" },
         })
-        console.log("Blogs in the infinite scroll : ", blogs)
+       return {success:true,message:blogs}
         
     } catch (error) {
+        return { success: false, message: "Something went wrong while fetching" }
+
         console.log("Error in the blogs page of the infinite scroll thing")
     }
     

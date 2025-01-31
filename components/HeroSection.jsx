@@ -3,7 +3,7 @@ import OrbitingTexts from './OrbitingWrite';
 
 function HeroSection() {
     return (
-        <div className="flex justify-between items-center px-16 py-8 rounded-lg shadow-lg">
+        <div className="flex justify-between items-center px-16 pt-4  rounded-lg ">
             {/* Left Section */}
             <div className="max-w-lg">
                 <h1 className="text-4xl font-bold mb-4 font-sans">
@@ -15,7 +15,7 @@ function HeroSection() {
             </div>
 
             {/* Right Section */}
-            <div className='mb-10 mr-20'>
+            <div className='mb-4 mr-20'>
                 <OrbitingTexts />
             </div>
         </div>

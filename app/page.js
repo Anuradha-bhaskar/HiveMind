@@ -6,11 +6,14 @@ export default async function Home() {
   return (
     <div className="container mx-auto bg-white">
       <HeroSection />
-      <div className="flex flex-col md:flex-row mt-8">
-        <div className="md:w-[70%] pr-4">
+      <div className="flex flex-col md:flex-row">
+        <div className="md:w-[5%] pr-4">
+          
+        </div>
+        <div className="md:w-[60%] pr-4">
           <MainBlog />
         </div>
-        <div className="md:w-[30%] mt-8 md:mt-0">
+        <div className="md:w-[35%] mt-8 md:mt-0">
           <BlogSideSection />
         </div>
       </div>
