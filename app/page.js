@@ -10,12 +10,13 @@ export default async function Home() {
         <div className="md:w-[5%] pr-4">
           
         </div>
-        <div className="md:w-[60%] pr-4">
+        <div className="md:w-[60%] ">
           <MainBlog />
         </div>
-        <div className="md:w-[35%] mt-8 md:mt-0">
+        <div className="md:w-[40%] mt-8 md:-ml-24 md:mt-0">
           <BlogSideSection />
         </div>
+
       </div>
     </div>
   )

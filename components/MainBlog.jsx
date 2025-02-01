@@ -6,18 +6,17 @@ async function MainBlog() {
     const blog = message[0];
 
     return (
-        <div className="bg-white max-w-2xl mx-auto shadow-sm">
+        <div className="bg-white max-w-xl mx-auto ">
             {blog && (
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col ">
                     <div className="relative w-[500px] h-[300px]">
                         <Image
                             src={blog.image || "/placeholder.svg"}
                             alt={blog.title}
                             layout="fill"
                             objectFit="cover"
-                            className="rounded-2xl shadow-lg"
+                            className="rounded-2xl border "
                         />
-                       
                             <Badge className="absolute bottom-2 left-2 bg-black"> {blog.tags[0].toLowerCase()}</Badge>
                         
                     </div>
