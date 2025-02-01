@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { fetchBlogsForInfinte } from "@/actions/infiniteScrollAction";
+import MainPageBlogComp from "./MainPageBlogComp";
+import { Button } from "./ui/button";
 
 function LoaderBlog() {
     const { ref, inView } = useInView();
@@ -36,22 +38,33 @@ function LoaderBlog() {
     }, [inView, hasMoreBlogs, limit, isLoading, blogs]); // Re-run effect when inView, hasMoreBlogs, limit, or isLoading change
 
     return (
-        <div className="flex space-x-2 justify-center items-center h-40" ref={ref}>
-            {blogs.length > 0 ? (
+        <div className="flex flex-col space-y-4 justify-center items-center w-full" ref={ref}>
+         
+
+            {/* Render blogs only after loading */}
+            {blogs && blogs.length > 0 ? (
                 blogs.map((blog) => (
-                    <div key={blog.id}>Hello</div> // Render your blog component here
+                    <MainPageBlogComp
+                        key={blog.id}
+                        title={blog.title}
+                        image={blog.image}
+                        createdAt={blog.createdAt}
+                        content={blog.content}
+                        tag={blog.tags[0]}
+                    />
                 ))
             ) : (
-                <div>No more blogs</div> // Show message if no blogs available
+                !isLoading && <div>No more blogs</div> // Show message if no blogs available and loading is complete
             )}
 
-            {/* Loader animation */}
+
+            {/* Show loader while blogs are loading */}
             {isLoading && (
-                <>
+                <div className="flex space-x-2 justify-center items-center">
                     <div className="w-2 h-2 bg-black rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
                     <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                </>
+                </div>
             )}
         </div>
     );
