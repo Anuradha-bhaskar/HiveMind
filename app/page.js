@@ -1,7 +1,8 @@
 import HeroSection from "@/components/HeroSection"
 import MainBlog from "@/components/MainBlog"
 import BlogSideSection from "@/components/BlogSideSection"
-
+import LoaderBlog
+  from "@/components/LoaderBlog"
 export default async function Home() {
   return (
     <div className="container mx-auto bg-white">
@@ -13,11 +14,15 @@ export default async function Home() {
         <div className="md:w-[60%] ">
           <MainBlog />
         </div>
-        <div className="md:w-[40%] mt-8 md:-ml-24 md:mt-0">
+        <div className="md:w-[40%] mt-8 md:-ml-28 md:mt-0">
           <BlogSideSection />
         </div>
 
       </div>
+      <div className="w-full mx-auto text-center">
+        <LoaderBlog/>
+      </div>
+
     </div>
   )
 }

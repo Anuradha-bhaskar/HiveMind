@@ -9,7 +9,7 @@ import SideIndividualBlog from './SideIndividualBlog';
      
           {blogs && blogs.map((blog) => (
               <div>
-                  <SideIndividualBlog imageUrl={blog.image} title={blog.title} date={blog.createdAt} tag={blog.tags[0]} />
+                  <SideIndividualBlog key={blog.id} imageUrl={blog.image} title={blog.title} date={blog.createdAt} tag={blog.tags[0]} id={blog.id} />
                   
               </div>
 

@@ -1,8 +1,10 @@
 import Image from "next/image"
 import { Badge } from "./ui/badge"
-
-function SideIndividualBlog({ imageUrl, title, tag, date }) {
+import Link from "next/link"
+function SideIndividualBlog({ imageUrl, title, tag, date,id }) {
     return (
+
+        <Link href={`/blog/${title.toLowerCase().split(" ").join("-")}-${id}`}>
         <div className="flex items-start space-x-4 mb-2">
             <div className="w-[180px] h-[100px] relative overflow-hidden rounded-lg">
                 <Image
@@ -25,7 +27,8 @@ function SideIndividualBlog({ imageUrl, title, tag, date }) {
                 </div>
                 <h3 className="text-sm font-semibold text-gray-800 line-clamp-2">{title}</h3>
             </div>
-        </div>
+            </div>
+        </Link>
     )
 }
 

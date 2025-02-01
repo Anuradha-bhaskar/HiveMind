@@ -1,12 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 import { fetchBlogsForInfinte } from "@/actions/infiniteScrollAction";
 import { Badge } from "./ui/badge";
 async function MainBlog() {
     const { message } = await fetchBlogsForInfinte(0, 1);
     const blog = message[0];
 
+
     return (
         <div className="bg-white max-w-xl mx-auto ">
+            <Link href={`/blog/${blog.title.toLowerCase().split(" ").join("-")}-${blog.id}`} >
             {blog && (
                 <div className="flex flex-col ">
                     <div className="relative w-[500px] h-[300px]">
@@ -34,7 +37,8 @@ async function MainBlog() {
                         </span>
                     </div>
                 </div>
-            )}
+                )}
+            </Link>
         </div>
     );
 }
