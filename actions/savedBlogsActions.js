@@ -77,7 +77,7 @@ export async function getSavedBlog(userId) {
     } catch (error) {
         return {
             success: false,
-            message: `Error fetching saved blogs: ${error.message}`
+            message: `Error fetching saved blogs`
         };
     }
 }

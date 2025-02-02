@@ -203,3 +203,21 @@ export async function toggleBlogLike(userId, blogId) {
     }
     
 }
+
+export async function getYourBlogs(userId) {
+    try {
+        const blogs = await prisma.blog.findMany({
+            where: {
+                authorId: userId
+            }
+        });
+
+        if (blogs.length > 0) {
+            return { success: true, message: blogs };
+        } else {
+            return { success: false, message: "No blogs found" };
+        }
+    } catch (error) {
+        return { success: false, message: "Failed to fetch blogs" };
+    }
+}

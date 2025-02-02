@@ -14,7 +14,7 @@ export default async function Home() {
         <div className="md:w-[60%] ">
           <MainBlog />
         </div>
-        <div className="md:w-[40%] mt-8 md:-ml-28 md:mt-0">
+        <div className="md:w-[40%] mt-8 md:-ml-32 md:mt-0">
           <BlogSideSection />
         </div>
 

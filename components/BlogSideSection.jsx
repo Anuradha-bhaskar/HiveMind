@@ -8,10 +8,10 @@ import SideIndividualBlog from './SideIndividualBlog';
       <div className="bg-white max-w-xl ">
      
           {blogs && blogs.map((blog) => (
-              <div>
+              
                   <SideIndividualBlog key={blog.id} imageUrl={blog.image} title={blog.title} date={blog.createdAt} tag={blog.tags[0]} id={blog.id} />
                   
-              </div>
+         
 
           ))}
     </div>

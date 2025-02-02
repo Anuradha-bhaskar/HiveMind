@@ -4,7 +4,7 @@ async function TopLeftProfile({ user}) {
     
 
     return (
-        <div className="flex items-center gap-6 py-5 px-10  ">
+        <div className="flex items-center gap-6 py-5 px-10 sticky top-0 ">
             {/* Left side: Name and Username */}
             <div className="flex flex-col">
                 <h1 className="text-3xl font-semibold  tracking-tighter font-sans">{user.name}</h1>

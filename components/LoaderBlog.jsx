@@ -50,6 +50,7 @@ function LoaderBlog() {
                         image={blog.image}
                         createdAt={blog.createdAt}
                         content={blog.content}
+                        id={blog.id}
                         tag={blog.tags[0]}
                     />
                 ))

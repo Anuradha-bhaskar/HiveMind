@@ -7,7 +7,7 @@ async function RightProfile({ user }) {
    
 
     return (
-        <div className="flex flex-wrap items-center gap-6 p-6">
+        <div className="flex flex-wrap items-center gap-6 p-6 sticky">
             {/* User Image */}
             {user.image && (
                 <img
