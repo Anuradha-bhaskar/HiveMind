@@ -6,8 +6,8 @@ const OrbitingTexts = () => {
         < Link href={"/new-story"} className = "hidden md:block relative" >
           <svg
             viewBox="0 0 200 200"
-            width="160"
-            height="160" 
+            width="140"
+            height="140" 
             // className="text-lg tracking-widest animate-spin duration-[20s]"
             className="text-lg tracking-widest"
           >

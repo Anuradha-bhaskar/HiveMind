@@ -12,7 +12,7 @@ async function MainBlog() {
             <Link href={`/blog/${blog.title.toLowerCase().split(" ").join("-")}-${blog.id}`} >
             {blog && (
                 <div className="flex flex-col ">
-                    <div className="relative w-[500px] h-[300px]">
+                    <div className="relative w-[500px] h-[315px]">
                         <Image
                             src={blog.image || "/placeholder.svg"}
                             alt={blog.title}

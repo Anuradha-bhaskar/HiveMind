@@ -5,7 +5,7 @@ import Link from "next/link"
 function MainPageBlogComp({ title, createdAt, content, image, tag ,id}) {
     return (
         <Link href={`/blog/${title.toLowerCase().split(" ").join("-")}-${id}`}>
-        <div className="w-full max-w-5xl mx-auto bg-white rounded-xl overflow-hidden mb-2 hover:bg-gray-50 transition-colors duration-200">
+        <div className="w-full max-w-5xl mx-auto bg-white rounded-xl overflow-hidden  hover:bg-gray-50 transition-colors duration-200">
             <div className="flex p-4">
                 {/* Image container with fixed dimensions */}
                 <div className="flex-shrink-0 min-w-[200px] min-h-[180px] relative rounded-xl overflow-hidden">

@@ -3,9 +3,9 @@ import OrbitingTexts from './OrbitingWrite';
 
 function HeroSection() {
     return (
-        <div className="flex justify-between items-center px-16 pt-4  rounded-lg ">
+        <div className="flex justify-between items-center px-16 pt-2  rounded-lg ">
             {/* Left Section */}
-            <div className="max-w-lg">
+            <div className="max-w-xl">
                 <h1 className="text-4xl font-bold mb-4 font-sans">
                     Your Destination for Creativity, Knowledge, and Growth
                 </h1>

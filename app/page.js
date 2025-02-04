@@ -3,14 +3,15 @@ import MainBlog from "@/components/MainBlog"
 import BlogSideSection from "@/components/BlogSideSection"
 import LoaderBlog
   from "@/components/LoaderBlog"
+  import SearchComp from "@/components/SearchComp"
 export default async function Home() {
   return (
     <div className="container mx-auto bg-white">
       <HeroSection />
       <div className="flex flex-col md:flex-row">
-        <div className="md:w-[5%] pr-4">
+        {/* <div className="md:w-[5%] pr-4">
           
-        </div>
+        </div> */}
         <div className="md:w-[60%] ">
           <MainBlog />
         </div>
@@ -20,6 +21,7 @@ export default async function Home() {
 
       </div>
       <div className="w-full mx-auto text-center">
+     <SearchComp/>
         <LoaderBlog/>
       </div>
 

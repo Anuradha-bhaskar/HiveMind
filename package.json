@@ -26,7 +26,7 @@
     "date-fns": "^4.1.0",
     "frontend": "file:",
     "lucide-react": "^0.473.0",
-    "motion": "^12.0.5",
+    "motion": "^12.0.11",
     "next": "15.1.4",
     "next-cloudinary": "^6.16.0",
     "react": "^18.3.1",

@@ -38,36 +38,39 @@ function LoaderBlog() {
     }, [inView, hasMoreBlogs, limit, isLoading, blogs]); // Re-run effect when inView, hasMoreBlogs, limit, or isLoading change
 
     return (
-        <div className="flex flex-col space-y-4 justify-center items-center w-full" ref={ref}>
-         
+        <div className="px-10">
+            
+            <div className="flex flex-col space-y-6 justify-center items-center w-full" ref={ref}>
 
-            {/* Render blogs only after loading */}
-            {blogs && blogs.length > 0 ? (
-                blogs.map((blog) => (
-                    <MainPageBlogComp
-                        key={blog.id}
-                        title={blog.title}
-                        image={blog.image}
-                        createdAt={blog.createdAt}
-                        content={blog.content}
-                        id={blog.id}
-                        tag={blog.tags[0]}
-                    />
-                ))
-            ) : (
-                !isLoading && <div>No more blogs</div> // Show message if no blogs available and loading is complete
-            )}
+                {/* Render blogs only after loading */}
+                {blogs && blogs.length > 0 ? (
+                    blogs.map((blog) => (
+                        <MainPageBlogComp
+                            key={blog.id}
+                            title={blog.title}
+                            image={blog.image}
+                            createdAt={blog.createdAt}
+                            content={blog.content}
+                            id={blog.id}
+                            tag={blog.tags[0]}
+                            className="w-full max-w-4xl p-4 md:p-6 rounded-lg shadow-sm"
+                        />
+                    ))
+                ) : (
+                    !isLoading && <div className="mt-4 text-gray-500">No more blogs</div> // Show message if no blogs available and loading is complete
+                )}
 
-
-            {/* Show loader while blogs are loading */}
-            {isLoading && (
-                <div className="flex space-x-2 justify-center items-center">
-                    <div className="w-2 h-2 bg-black rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                    <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                </div>
-            )}
+                {/* Show loader while blogs are loading */}
+                {isLoading && (
+                    <div className="flex space-x-2 justify-center items-center mt-4">
+                        <div className="w-3 h-3 bg-black rounded-full animate-bounce"></div>
+                        <div className="w-3 h-3 bg-black rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                        <div className="w-3 h-3 bg-black rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                    </div>
+                )}
+            </div>
         </div>
+
     );
 }
 
