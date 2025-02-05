@@ -21,7 +21,7 @@ export default async function Home() {
 
       </div>
       <div className="w-full mx-auto text-center">
-     <SearchComp/>
+       <SearchComp/>
         <LoaderBlog/>
       </div>
 
