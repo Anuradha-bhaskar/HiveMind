@@ -1,10 +1,12 @@
+"use client"
 import React from 'react'
-
-function page({ params }) {
-    const category = params.category;
+import { useFilters} from '@/contexts/FilterContext';
+function page() {
+    const {filters }=useFilters()
   return (
     <div>
-      Inside the page.jsx of category of {category}
+      Inside the page.jsx of category of {filters.sort} andd {filters.category}
+     
     </div>
   )
 }
