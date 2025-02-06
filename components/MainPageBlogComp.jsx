@@ -53,7 +53,8 @@ function MainPageBlogComp({ title, createdAt, content, image, tag ,id}) {
 
                     <p
                         className="text-gray-600 text-left  px-5 text-sm leading-relaxed line-clamp-3"
-                        dangerouslySetInnerHTML={{ __html: content.trim() }}
+                            dangerouslySetInnerHTML={{ __html: content.trim() }}
+                            suppressHydrationWarning={true}
                     />
 
 

@@ -221,3 +221,38 @@ export async function getYourBlogs(userId) {
         return { success: false, message: "Failed to fetch blogs" };
     }
 }
+
+export async function getCategoryAndSortedBlogs(sort, category) {
+    try {
+        let orderBy = { createdAt: "desc" };
+
+        if (sort === "newest") {
+            orderBy = { createdAt: "desc" }; 
+        } else if (sort === "most-popular") {
+            orderBy= [
+                {
+                    createdAt: "desc" // Default sorting, can be adjusted based on your needs
+                },
+                {
+                    likes: {
+                        _count: 'desc' // Sorting blogs by the number of likes
+                    }
+                }
+            ]
+        }
+
+        const blogs = await prisma.blog.findMany({
+            where: {
+                tags: {
+                    has: category
+                }
+            },
+            orderBy
+        });
+
+        return { success: true, message: "Successfully fetched the blogs", data: blogs };
+    } catch (error) {
+        console.error("Error fetching blogs:", error.message);
+        return { success: false, message: "Failed to fetch the blogs" };
+    }
+}

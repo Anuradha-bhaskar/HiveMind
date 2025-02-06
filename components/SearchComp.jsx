@@ -41,17 +41,17 @@ function SearchComp() {
                                 All Blogs
                             </Button>
                         </Link>
-                        <Link href="/blog/category/tech">
+                        <Link href="/blog/category/TECH">
                             <Button variant="ghost" className="hover:bg-secondary">
                                 Tech
                             </Button>
                         </Link>
-                        <Link href="/blogs/category/design">
+                        <Link href="/blogs/category/DESIGN">
                             <Button variant="ghost" className="hover:bg-secondary">
                                 Design
                             </Button>
                         </Link>
-                        <Link href="/blogs/category/envirnoment">
+                        <Link href="/blogs/category/ENVIRONMENT">
                             <Button variant="ghost" className="hover:bg-secondary">
                                 Environment
                             </Button>
