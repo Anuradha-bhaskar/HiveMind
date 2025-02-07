@@ -44,8 +44,6 @@ function FilterSidebar() {
     const handleSearch = (e) => {
         e.preventDefault();
         const search = searchQuery.trim().toUpperCase().replace(/\s+/g, "_");
-       
-
         const tagExists = tags.includes(search);
 
         if (tagExists) {

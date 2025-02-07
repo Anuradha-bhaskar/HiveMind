@@ -26,7 +26,6 @@ function FollowAuthorButton({ userId, authorId ,isFollowing}) {
     }
   return (
       <div>
-          
           <ShimmerButton onClick={(e)=>handleFollow(e)} className="px-4 py-1.5">{isFollowing1?"following":"follow" }</ShimmerButton>
     </div>
   )

@@ -4,8 +4,9 @@ import { fetchBlogsForInfinte } from "@/actions/infiniteScrollAction";
 import { Badge } from "./ui/badge";
 async function MainBlog() {
     const { message } = await fetchBlogsForInfinte(0, 1);
-    const blog = message[0];
+    const blog = message?.[0] || null;
 
+    if (!blog) return "No blog available.";
 
     return (
         <div className="bg-white max-w-xl mx-auto ">

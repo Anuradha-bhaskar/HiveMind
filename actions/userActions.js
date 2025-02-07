@@ -111,7 +111,7 @@ export async function userById(params) {
 export async function userByClerkId(params) {
     try {
         const clerkId = params
-        console.log(clerkId)
+       console.log("clerk id",clerkId)
         if (!clerkId) {
             console.log("clerkId not found")
             return { success: false, message: "clerkId not found" }
@@ -121,8 +121,11 @@ export async function userByClerkId(params) {
                 clerkId: clerkId,
             }
         });
+        console.log("User in the clerk id L ",user)
         if (user) {
             return { success: true, message: user }
+        } else {
+            return { success: false, message: "NO user with that clerk id " }
         }
 
     } catch (error) {

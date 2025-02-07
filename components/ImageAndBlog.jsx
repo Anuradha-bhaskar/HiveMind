@@ -2,7 +2,7 @@ import React from 'react'
 
 
 function ImageAndBlog({ imageUrl, blog }) {
-    const htmlBlog = blog
+  
    
     return (
         <article className="max-w-3xl mx-auto px-4 py-8">
@@ -20,7 +20,8 @@ function ImageAndBlog({ imageUrl, blog }) {
            
                 {blog ? (
                     <div className="max-w-3xl mx-auto px-4 py-8"
-                        dangerouslySetInnerHTML={{ __html: blog }}
+                    dangerouslySetInnerHTML={{ __html: blog }}
+                    suppressHydrationWarning={true}
                     />
                 ) : (
                     <p>Loading...</p>

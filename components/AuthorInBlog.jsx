@@ -14,7 +14,6 @@ async function AuthorInBlog({ authorId, userId }) {
   }
 
   const {  isFollowing } = await checkFollowing(userId, authorId);
-  console.log("isFollowing", isFollowing);
   const author = result.message;
   return (
     <div className="flex items-center justify-between mb-8 px-4 py-3 bg-white border-t border-b">
