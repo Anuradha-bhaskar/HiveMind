@@ -1,12 +1,12 @@
 "use client";
-
+import tags from "@/lib/tags";
 import * as React from "react";
 import { useFilters } from "@/contexts/FilterContext";
 import { Search, X, SlidersHorizontal } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
+import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -40,11 +40,23 @@ function FilterSidebar() {
         setFilters((prev) => ({ ...prev, category }));
     };
 
-    // Handle search query change
+   
     const handleSearch = (e) => {
         e.preventDefault();
-        alert(`Search for: ${searchQuery}`);
+        const search = searchQuery.trim().toUpperCase().replace(/\s+/g, "_");
+       
+
+        const tagExists = tags.includes(search);
+
+        if (tagExists) {
+            setFilters((prev) => ({ ...prev, category: search }));
+        } else {
+            toast.error("No matching tag found!");
+        }
+
+        setSearchQuery("");
     };
+
 
     // Toggle sidebar visibility for mobile
     const toggleSidebar = () => {
