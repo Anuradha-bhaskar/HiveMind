@@ -35,7 +35,7 @@ async function MobileNavbar() {
                                         Home
                                     </Button>
                                 </Link>
-                                <Link href={"/notification"}>
+                                <Link href={"/spaces"}>
                                     <Button variant={"ghost"}>
                                         <UsersRound />
                                         Spaces
