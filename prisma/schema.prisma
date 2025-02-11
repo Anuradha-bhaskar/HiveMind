@@ -130,13 +130,16 @@ model Space {
   name        String
   description String
   creatorId   String
+  image1      String?  // First image URL
+  image2      String?  // Second image URL
   createdAt   DateTime @default(now())
 
   // Relations
   creator   User          @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   members   SpaceMember[] // Users who joined this space
-  questions Question[] // Questions asked in this space
+  questions Question[]    // Questions asked in this space
 }
+
 
 model SpaceMember {
   id       String   @id @default(cuid())
