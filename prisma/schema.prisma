@@ -130,6 +130,7 @@ model Space {
   name        String
   description String
   creatorId   String
+  tag         String
   image1      String?  // First image URL
   image2      String?  // Second image URL
   createdAt   DateTime @default(now())
