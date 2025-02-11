@@ -31,3 +31,18 @@ export async function createSpace(userId, title, description, selectedTag) {
     }
 }
 
+export async function getSpaceById(spaceId) {
+    try {
+        const space = await prisma.space.findUnique({
+            where: { id: spaceId }
+        });
+
+        if (!space) {
+            return { success: false, message: "Space not found", data: null };
+        }
+
+        return { success: true, message: "Successfully fetched the details", data: space };
+    } catch (error) {
+        return { success: false, message: "Error fetching space details", error: error.message };
+    }
+}
