@@ -4,7 +4,7 @@ function page({params}) {
   return (
     <div>
      
-      <SpaceViewHeader/>
+      <SpaceViewHeader spaceId={params.title} />
       Page inside of the title {params.title}
     </div>
   )

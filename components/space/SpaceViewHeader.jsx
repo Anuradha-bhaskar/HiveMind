@@ -7,8 +7,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
-function SpaceViewHeader() {
+import { getSpaceById } from "@/actions/spaceActions";
+ async function SpaceViewHeader({spaceId}) {
+     const result = await getSpaceById(spaceId);
+     
+     if (!result.success) {
+         return <div>Something went wrong could not fetch the data</div>
+     }
+     const space = result.data
     return (
         <div className="w-full">
             {/* Banner Container */}
@@ -44,7 +50,7 @@ function SpaceViewHeader() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                         <div className="space-y-1">
                             <h1 className="text-2xl font-bold tracking-tight">
-                                Cosmic Explorers Hub
+                              {space.name}
                             </h1>
                           
                             {/* Stats Section */}
@@ -100,9 +106,7 @@ function SpaceViewHeader() {
 
                     {/* Description */}
                     <p className="mt-4 text-muted-foreground max-w-2xl">
-                        Join our community of space enthusiasts as we explore the cosmos, share
-                        discoveries, and discuss the latest in astronomical research and space
-                        exploration.
+                       {space.description}
                     </p>
                 </div>
             </div>

@@ -46,3 +46,48 @@ export async function getSpaceById(spaceId) {
         return { success: false, message: "Error fetching space details", error: error.message };
     }
 }
+
+export async function toggleFollowSpace(userId, spaceId) {
+    try {
+        const existingMembership = await prisma.spaceMember.findUnique({
+            where: { userId_spaceId: { userId, spaceId } } 
+        });
+
+        if (existingMembership) {
+            await prisma.spaceMember.delete({
+                where: { id: existingMembership.id }
+            });
+            return { success: true, message: "Unfollowed the space" };
+        } else {
+            await prisma.spaceMember.create({
+                data: { userId, spaceId }
+            });
+            return { success: true, message: "Followed the space" };
+        }
+    } catch (error) {
+        return { success: false, message: "Error toggling follow", error: error.message };
+    }
+}
+
+export async function getSpaceByUserId(userId) {
+    try {
+        const spaces = await prisma.space.findMany({
+            where:
+            {
+                userId: userId
+            }
+        })
+
+        if (!spaces) {
+            return {success :false ,message:"UnSuccessfully fetched the data",data:null}
+        }
+        return { success: true, message: "Successfully fetched the data", data: spaces }
+        
+    } catch (error) {
+        return { success: false, message: "Something went wrong while fetching spaces", error: error.message };
+    }
+}
+
+export async function editProfile(params) {
+    
+}
