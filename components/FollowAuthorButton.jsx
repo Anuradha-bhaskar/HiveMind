@@ -1,5 +1,5 @@
 "use client"
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import React from 'react'
 import { ShimmerButton } from "./ui/shimmer-button";
 import toast from 'react-hot-toast';

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { fetchBlogsForInfinte } from "@/actions/infiniteScrollAction";
 import MainPageBlogComp from "./MainPageBlogComp";
-import { Button } from "./ui/button";
+
 
 function LoaderBlog() {
     const { ref, inView } = useInView();

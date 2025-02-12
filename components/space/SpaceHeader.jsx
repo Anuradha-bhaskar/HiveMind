@@ -19,6 +19,7 @@ import { Badge } from "../ui/badge";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/clerk-react";
+
 // Predefined tags
 const Tag = {
     MOVIE: "MOVIE",

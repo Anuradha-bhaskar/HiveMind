@@ -23,9 +23,25 @@ export async function createSpace(userId, title, description, selectedTag) {
                 tag: selectedTag
             },
         });
-        if (newSpace) {
-            return { success: true, message: "Successfully created the space!" };
+        if (!newSpace) {
+            return { success: false, message: "Something went wrong while creating a space" };
         }
+        const addAsSpaceMember = await prisma.spaceMember.create({
+            data: {
+                spaceId: newSpace.id,
+                userId:userId
+            }
+        })
+
+        if (!addAsSpaceMember) {
+            return { success: false, message: "Error while adding creator in the space member table" };
+            
+
+        }
+        
+        return { success: true, message: "Successfully created the space" };
+
+
     } catch (error) {
         return { success: false, message: "Failed to create space. Please try again." };
     }
@@ -87,7 +103,6 @@ export async function getSpaceByUserId(userId) {
         return { success: false, message: "Something went wrong while fetching spaces", error: error.message };
     }
 }
-
 export async function editProfile(params) {
     
 }

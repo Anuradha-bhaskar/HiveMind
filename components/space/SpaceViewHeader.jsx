@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { getSpaceById } from "@/actions/spaceActions";
+import ShareBtn from "./ShareBtn";
+import toast from "react-hot-toast";
  async function SpaceViewHeader({spaceId}) {
      const result = await getSpaceById(spaceId);
      
@@ -15,6 +17,9 @@ import { getSpaceById } from "@/actions/spaceActions";
          return <div>Something went wrong could not fetch the data</div>
      }
      const space = result.data
+
+
+     
     return (
         <div className="w-full">
             {/* Banner Container */}
@@ -72,10 +77,11 @@ import { getSpaceById } from "@/actions/spaceActions";
                                 <UserPlus className="w-4 h-4" />
                                 Follow Space
                             </Button>
-                            <Button variant="secondary" className="gap-2">
-                                <Share2 className="w-4 h-4" />
-                                Share
+                            <Button className="gap-2">
+                                <PenLine className="mr-2 h-4 w-4" />
+                                Edit Space
                             </Button>
+                            <ShareBtn  />
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="secondary" size="icon">
@@ -90,9 +96,7 @@ import { getSpaceById } from "@/actions/spaceActions";
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem>
 
-                                        <PenLine className="mr-2 h-4 w-4" />
-
-                                        <span>Edit Space</span>
+                                        
 
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
