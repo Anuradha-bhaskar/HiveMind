@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import {  useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -16,11 +16,53 @@ import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Camera, User } from "lucide-react"
+import { editSpaceDetails } from '@/actions/spaceActions'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import { getSpaceById } from '@/actions/spaceActions'
+function EditProfileSection({ spaceId }) {
+    
+    const [name, setName] = useState("")
+    const [description,setDescription]=useState("")
+    const [avatarImage, setAvatarImage] = useState("")
+    const [bannerImage, setBannerImage] = useState("")
 
-function EditProfileSection() {
-    const [avatarImage, setAvatarImage] = useState("/placeholder-avatar.jpg")
-    const [bannerImage, setBannerImage] = useState(null)
-
+const router =useRouter()
+    useEffect(() => {
+        const getSpaceData = async () => {
+            try {
+                const result = await getSpaceById(spaceId);
+                if (result) {
+                    setName(result.data.name || "");
+                    setDescription(result.data.description || "");
+                }
+            } catch (error) {
+                console.error("Error fetching space data:", error);
+            }
+        };
+        getSpaceData();
+    }, []);
+   
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const result = await editSpaceDetails(spaceId, name, description, avatarImage, bannerImage);
+            if (result) {
+                toast.success(result.message)
+                router.refresh()
+            } else {
+                toast.error(result.message)
+            }
+        } catch (error) {
+            toast.error("Error in edit space details ",error)
+        }
+        finally {
+            setName("")
+            setDescription("");
+            setAvatarImage("");
+            setBannerImage("")
+        }
+    }
     const handleAvatarChange = (event) => {
         const file = event.target.files[0]
         if (file) {
@@ -93,10 +135,11 @@ function EditProfileSection() {
                             </div>
                             <div className="space-y-1 text-center">
                                 <Camera className="mx-auto h-12 w-12 text-muted-foreground" />
+
                                 <div className="flex text-sm text-muted-foreground">
                                     <label
                                         htmlFor="bannerImage"
-                                        className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/90 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+                                        className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/90 "
                                     >
                                         <span>Upload a file</span>
                                         <Input
@@ -109,15 +152,19 @@ function EditProfileSection() {
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
+
                                 <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 10MB</p>
                             </div>
+
                         </div>
                     </div>
 
                     <div className="space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input id="name" placeholder="Enter your name" />
+                            <Input id="name" placeholder="Enter your name" value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="description">Description</Label>
@@ -125,12 +172,14 @@ function EditProfileSection() {
                                 id="description"
                                 placeholder="Tell us about yourself"
                                 className="min-h-[100px] resize-none"
+                                value={description}
+                                onChange={(e)=>setDescription(e.target.value)}
                             />
                         </div>
                     </div>
                 </div>
                 <DialogFooter className="mt-6">
-                    <Button type="submit" className="w-full">Save changes</Button>
+                    <Button type="submit" className="w-full" onClick={handleSubmit}>Save changes</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

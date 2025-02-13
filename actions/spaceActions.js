@@ -1,7 +1,7 @@
 "use server"
 import prisma from "@/lib/prisma"
 import { userByClerkId } from "./userActions";
-
+import cloudinary from "@/lib/cloudinary"
 
 export async function createSpace(userId, title, description, selectedTag) {
     try {
@@ -161,3 +161,36 @@ export async function getOwnerFromSpaceId(spaceId) {
 
 }
 
+export async function editSpaceDetails(spaceId, name, description, image1, image2) {
+    try {
+       
+        const avatar = await cloudinary.uploader.upload(image1, {
+            resource_type: 'image',
+        });
+
+        const banner = await cloudinary.uploader.upload(image2, {
+            resource_type: 'image',
+        });
+
+        const space = await prisma.space.update({
+            where: {
+                id: spaceId
+            },
+            data: {
+                name: name,
+                description: description,
+                image1: avatar.secure_url,
+                image2: banner.secure_url
+            }
+        });
+
+        if (space) {
+            return { success: true, message: "Space details updated successfully." };
+        } else {
+            return { success: false, message: "Failed to update space details." };
+        }
+    } catch (error) {
+        console.error("Error updating space details:", error);
+        return { success: false, message: "An error occurred while updating space details.", error: error.message };
+    }
+}

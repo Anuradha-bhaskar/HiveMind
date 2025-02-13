@@ -80,16 +80,16 @@ const WriteStory = ({username}) => {
     };
 
     const handleSubmit = async (e) => {
-        console.log("inside the submit methdo")
+        // console.log("inside the submit methdo")
         e.preventDefault();
         try {
-            console.log("Image console.log",image)
+            // console.log("Image console.log",image)
             let base64Image = null;
             if (image) {
                 // Check if image is valid
                 if (typeof image === 'string' && image.startsWith('data:image')) {
                     // If the image is already a Base64 string
-                    console.log("image isstring ")
+                    // console.log("image isstring ")
                     base64Image = image;
                 } else if (image instanceof File) {
                     // If the image is a File object

@@ -10,8 +10,6 @@ export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags
     try {
 
         const resultuser = await userByUsername(username);
-
-
         const result = await cloudinary.uploader.upload(base64Image, {
             resource_type: 'image',
         });

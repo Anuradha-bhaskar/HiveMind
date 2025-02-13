@@ -6,7 +6,6 @@ import { getOwnerFromSpaceId, getSpaceById } from "@/actions/spaceActions";
 import ShareBtn from "./ShareBtn";
 import { currentUser } from '@clerk/nextjs/server';
 import { checkSpaceFollowing } from "@/actions/spaceActions";
-import toast from "react-hot-toast";
 import SpaceFollowBtn from "./SpaceFollowBtn";
  async function SpaceViewHeader({spaceId}) {
      const result = await getSpaceById(spaceId);
@@ -40,7 +39,7 @@ import SpaceFollowBtn from "./SpaceFollowBtn";
                 {/* Banner Image with Gradient Overlay */}
                 <div className="absolute inset-0">
                     <img
-                        src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=2070&auto=format&fit=crop"
+                        src={space.image2}
                         alt="Space Banner"
                         className="w-full h-full object-cover"
                     />
@@ -52,7 +51,7 @@ import SpaceFollowBtn from "./SpaceFollowBtn";
                     <div className="relative w-32 h-32">
                         <div className="absolute inset-0">
                             <img
-                                src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=1169&auto=format&fit=crop"
+                                src={space.image1}
                                 alt="Profile"
                                 className="w-full h-full object-cover rounded-xl shadow-lg ring-4 ring-background"
                             />
@@ -87,7 +86,7 @@ import SpaceFollowBtn from "./SpaceFollowBtn";
                         {/* Action Buttons */}
                         <div className="flex items-center gap-3 sm:ml-auto">
                             {spaceOwnerId === viewUser.message.id ? (
-                                <EditProfileSection/>
+                                <EditProfileSection spaceId={spaceId}/>
                             ) : (
                                     <SpaceFollowBtn isFollowing={isFollowing} userId={viewUser.message.id} spaceId={spaceId} />
                             )}
