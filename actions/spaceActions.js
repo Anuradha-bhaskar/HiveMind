@@ -18,7 +18,7 @@ export async function createSpace(userId, title, description, selectedTag) {
         const newSpace = await prisma.space.create({
             data: {
                 creatorId: result.message.id,
-                name:title,
+                name: title,
                 description,
                 tag: selectedTag
             },
@@ -29,16 +29,16 @@ export async function createSpace(userId, title, description, selectedTag) {
         const addAsSpaceMember = await prisma.spaceMember.create({
             data: {
                 spaceId: newSpace.id,
-                userId:userId
+                userId: userId
             }
         })
 
         if (!addAsSpaceMember) {
             return { success: false, message: "Error while adding creator in the space member table" };
-            
+
 
         }
-        
+
         return { success: true, message: "Successfully created the space" };
 
 
@@ -65,8 +65,10 @@ export async function getSpaceById(spaceId) {
 
 export async function toggleFollowSpace(userId, spaceId) {
     try {
+
+        
         const existingMembership = await prisma.spaceMember.findUnique({
-            where: { userId_spaceId: { userId, spaceId } } 
+            where: { userId_spaceId: { userId, spaceId } }
         });
 
         if (existingMembership) {
@@ -87,7 +89,7 @@ export async function toggleFollowSpace(userId, spaceId) {
 
 export async function checkSpaceFollowing(userId, spaceId) {
     try {
-        
+
         const haveSpaceMember = await prisma.spaceMember.findUnique({
             where: {
                 userId_spaceId: {
@@ -98,12 +100,14 @@ export async function checkSpaceFollowing(userId, spaceId) {
         })
 
         if (!haveSpaceMember) {
-            return {success:false}
+            return { success: false, message: "Doesn`t follow space yet" }
+
         }
+        return { success: true, message: "Already follow the space" }
     } catch (error) {
-        
+        return { success: false, message: "something went wrong while checkinng follow status " }
     }
-    
+
 }
 
 export async function getSpaceByUserId(userId) {
@@ -116,10 +120,10 @@ export async function getSpaceByUserId(userId) {
         })
 
         if (!spaces) {
-            return {success :false ,message:"UnSuccessfully fetched the data",data:null}
+            return { success: false, message: "UnSuccessfully fetched the data", data: null }
         }
         return { success: true, message: "Successfully fetched the data", data: spaces }
-        
+
     } catch (error) {
         return { success: false, message: "Something went wrong while fetching spaces", error: error.message };
     }
@@ -129,21 +133,21 @@ export async function getOwnerFromSpaceId(spaceId) {
     try {
         const owner = await prisma.space.findUnique({
             where: {
-                id:spaceId
+                id: spaceId
             },
             include: {
-                creator:true 
+                creator: true
             }
         })
 
-        if(!owner){
-            return { success: false, message: "Unable to find the owner of the space", data:null}
+        if (!owner) {
+            return { success: false, message: "Unable to find the owner of the space", data: null }
         }
-        return {success :true, message:"Successfullt fetched the owner ", data:owner}
+        return { success: true, message: "Successfullt fetched the owner ", data: owner }
     } catch (error) {
-        return { success: false, message: "Something went wrong while fetching the owner", error:error.message }
+        return { success: false, message: "Something went wrong while fetching the owner", error: error.message }
 
     }
-    
+
 }
 

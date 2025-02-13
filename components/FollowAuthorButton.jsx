@@ -11,7 +11,7 @@ function FollowAuthorButton({ userId, authorId ,isFollowing}) {
     const handleFollow = async (e) => {
         e.preventDefault();
         try {
-            console.log("Inside the follow button")
+            // console.log("Inside the follow button")
             const result = await toggleFollow(userId, authorId);
             if (result.success) {
                 setIsFollowing1(!isFollowing1)

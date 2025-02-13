@@ -1,4 +1,4 @@
-import {  UserPlus, Share2, Bell, MoreHorizontal,PenLine } from "lucide-react";
+import {  UserPlus, UserMinus, Bell, MoreHorizontal,PenLine } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,7 +11,9 @@ import { Button } from "@/components/ui/button";
 import { getOwnerFromSpaceId, getSpaceById } from "@/actions/spaceActions";
 import ShareBtn from "./ShareBtn";
 import { currentUser } from '@clerk/nextjs/server';
+import { checkSpaceFollowing } from "@/actions/spaceActions";
 import toast from "react-hot-toast";
+import SpaceFollowBtn from "./SpaceFollowBtn";
  async function SpaceViewHeader({spaceId}) {
      const result = await getSpaceById(spaceId);
      if (!result.success) {
@@ -30,7 +32,12 @@ import toast from "react-hot-toast";
      if (!viewUser) {
          return <div>Something went wrong could not fetch the data</div>
      }
-
+     const result3 = await checkSpaceFollowing(viewUser.message.id, spaceId)
+     if (!result3) {
+         return <div>Something went wrong could not fetch the data</div>
+     }
+    
+     const isFollowing = result3.success;
      
     return (
         <div className="w-full">
@@ -85,42 +92,17 @@ import toast from "react-hot-toast";
 
                         {/* Action Buttons */}
                         <div className="flex items-center gap-3 sm:ml-auto">
-                            {
-                                spaceOwnerId !== viewUser.message.id ?
-                                    <Button className="gap-2">
-                                        <UserPlus className="w-4 h-4" />
-                                        Follow Space
-                                    </Button> :
-                                    <Button className="gap-2">
-                                        <PenLine className="mr-2 h-4 w-4" />
-                                        Edit Space
-                                    </Button>
-                            }
+                            {spaceOwnerId === viewUser.message.id ? (
+                                <Button className="gap-2">
+                                    <PenLine className="mr-2 h-4 w-4" />
+                                    Edit Space
+                                </Button>
+                            ) : (
+                                    <SpaceFollowBtn isFollowing={isFollowing} userId={viewUser.message.id} spaceId={spaceId} />
+                            )}
+
                            
                             <ShareBtn  />
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="secondary" size="icon">
-                                        <MoreHorizontal className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>
-                                        <Bell className="mr-2 h-4 w-4" />
-                                        <span>Turn on Notifications</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
-
-                                        
-
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem className="text-destructive">
-                                        Report Space
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
                         </div>
                     </div>
 
