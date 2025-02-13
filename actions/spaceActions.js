@@ -50,7 +50,17 @@ export async function createSpace(userId, title, description, selectedTag) {
 export async function getSpaceById(spaceId) {
     try {
         const space = await prisma.space.findUnique({
-            where: { id: spaceId }
+            where: { id: spaceId },
+            include: {
+                _count: {
+                    select: {
+                        members: true,
+                        questions:true
+                   }
+               }
+           }
+
+
         });
 
         if (!space) {

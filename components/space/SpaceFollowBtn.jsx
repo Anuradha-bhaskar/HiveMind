@@ -2,12 +2,14 @@
 import React from 'react'
 import { useState } from 'react'
 import { Button } from '../ui/button'
-import { UserMinus } from 'lucide-react'
-import { UserPlus } from 'lucide-react'
+import { MinusCircle } from 'lucide-react'
+import { PlusCircle} from 'lucide-react'
 import { toggleFollowSpace } from '@/actions/spaceActions'
 import toast from 'react-hot-toast'
+import { useRouter } from "next/navigation";
 function SpaceFollowBtn({ isFollowing, userId, spaceId }) {
     const [isFollowing1, setIsFollowing1] = useState(isFollowing);
+    const router = useRouter();
     const handleFollow = async (e) => {
         e.preventDefault();
         try {
@@ -20,22 +22,23 @@ function SpaceFollowBtn({ isFollowing, userId, spaceId }) {
             }
         } catch (error) {
             toast.error("Error ",error)
+        } finally {
+            router.refresh();
         }
     }
-
-
     return (
-        <Button className="gap-2" onClick={handleFollow} >
+        <Button className="gap-2" onClick={handleFollow}>
             {isFollowing1 ? (
                 <>
-                    <UserMinus className="w-4 h-4" /> Unfollow
+                    <MinusCircle className="w-4 h-4" /> Leave Space
                 </>
             ) : (
                 <>
-                    <UserPlus className="w-4 h-4" /> Follow Space
+                    <PlusCircle className="w-4 h-4" /> Join Space
                 </>
             )}
         </Button>
+
     )
 }
 

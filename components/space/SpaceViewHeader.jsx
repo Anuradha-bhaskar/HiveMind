@@ -1,11 +1,5 @@
 import {  UserPlus, UserMinus, Bell, MoreHorizontal,PenLine } from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import EditProfileSection from "./EditProfileSection";
 import { userByClerkId } from "@/actions/userActions";
 import { Button } from "@/components/ui/button";
 import { getOwnerFromSpaceId, getSpaceById } from "@/actions/spaceActions";
@@ -80,11 +74,11 @@ import SpaceFollowBtn from "./SpaceFollowBtn";
                             {/* Stats Section */}
                             <div className="flex items-center gap-6 mt-2">
                                 <div className="flex items-center gap-1.5">
-                                    <span className="font-semibold text-foreground">52.4K</span>
+                                    <span className="font-semibold text-foreground">{space._count.members}</span>
                                     <span className="text-sm text-muted-foreground">Followers</span>
                                 </div>
                                 <div className="flex items-center gap-1.5">
-                                    <span className="font-semibold text-foreground">1.2K</span>
+                                    <span className="font-semibold text-foreground">{space._count.questions}</span>
                                     <span className="text-sm text-muted-foreground">Posts</span>
                                 </div>
                             </div>
@@ -93,10 +87,7 @@ import SpaceFollowBtn from "./SpaceFollowBtn";
                         {/* Action Buttons */}
                         <div className="flex items-center gap-3 sm:ml-auto">
                             {spaceOwnerId === viewUser.message.id ? (
-                                <Button className="gap-2">
-                                    <PenLine className="mr-2 h-4 w-4" />
-                                    Edit Space
-                                </Button>
+                                <EditProfileSection/>
                             ) : (
                                     <SpaceFollowBtn isFollowing={isFollowing} userId={viewUser.message.id} spaceId={spaceId} />
                             )}

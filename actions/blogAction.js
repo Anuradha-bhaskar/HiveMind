@@ -1,7 +1,7 @@
 "use server"
 import prisma from "@/lib/prisma"
 import cloudinary from "@/lib/cloudinary"
-import { userByClerkId, userByUsername } from "./userActions";
+import {  userByUsername } from "./userActions";
 import {  currentUser } from "@clerk/nextjs/server";
 
 export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags, base64Image, username) {
