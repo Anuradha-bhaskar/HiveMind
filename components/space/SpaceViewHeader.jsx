@@ -6,18 +6,30 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { userByClerkId } from "@/actions/userActions";
 import { Button } from "@/components/ui/button";
-import { getSpaceById } from "@/actions/spaceActions";
+import { getOwnerFromSpaceId, getSpaceById } from "@/actions/spaceActions";
 import ShareBtn from "./ShareBtn";
+import { currentUser } from '@clerk/nextjs/server';
 import toast from "react-hot-toast";
  async function SpaceViewHeader({spaceId}) {
      const result = await getSpaceById(spaceId);
-     
      if (!result.success) {
          return <div>Something went wrong could not fetch the data</div>
      }
      const space = result.data
-
+    
+     const result2 = await getOwnerFromSpaceId(spaceId);
+     if (!result2) {
+         return <div>Something went wrong could not fetch the data</div>
+     }
+     const spaceOwnerId = result2.data.creatorId;
+   
+     const { id } = await currentUser();
+     const viewUser = await userByClerkId(id);
+     if (!viewUser) {
+         return <div>Something went wrong could not fetch the data</div>
+     }
 
      
     return (
@@ -73,14 +85,18 @@ import toast from "react-hot-toast";
 
                         {/* Action Buttons */}
                         <div className="flex items-center gap-3 sm:ml-auto">
-                            <Button className="gap-2">
-                                <UserPlus className="w-4 h-4" />
-                                Follow Space
-                            </Button>
-                            <Button className="gap-2">
-                                <PenLine className="mr-2 h-4 w-4" />
-                                Edit Space
-                            </Button>
+                            {
+                                spaceOwnerId !== viewUser.message.id ?
+                                    <Button className="gap-2">
+                                        <UserPlus className="w-4 h-4" />
+                                        Follow Space
+                                    </Button> :
+                                    <Button className="gap-2">
+                                        <PenLine className="mr-2 h-4 w-4" />
+                                        Edit Space
+                                    </Button>
+                            }
+                           
                             <ShareBtn  />
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>

@@ -111,7 +111,7 @@ export async function userById(params) {
 export async function userByClerkId(params) {
     try {
         const clerkId = params
-       console.log("clerk id",clerkId)
+    //    console.log("clerk id",clerkId)
         if (!clerkId) {
             console.log("clerkId not found")
             return { success: false, message: "clerkId not found" }
@@ -121,7 +121,7 @@ export async function userByClerkId(params) {
                 clerkId: clerkId,
             }
         });
-        console.log("User in the clerk id L ",user)
+        // console.log("User in the clerk id ",user)
         if (user) {
             return { success: true, message: user }
         } else {
@@ -165,14 +165,17 @@ export async function saveChangesOfProfile(params) {
 }
 export async function checkFollowing(userId, authorId) {
     try {
-        const result = await prisma.follows.findFirst({
+        const result = await prisma.follows.findUnique({
             where: {
-                followerId: userId,
-                followingId: authorId
+                followerId_followingId: {
+                    followerId: userId,
+                    followingId: authorId
+                }
+               
             }
         });
 
-        return { success: true, isFollowing: !!result }; // Explicitly return follow status
+        return { success: true, isFollowing: !!result }; 
     } catch (error) {
         console.error("Error checking follow status");
         return { success: false, message: "Something went wrong while checking following" };

@@ -85,6 +85,27 @@ export async function toggleFollowSpace(userId, spaceId) {
     }
 }
 
+export async function checkSpaceFollowing(userId, spaceId) {
+    try {
+        
+        const haveSpaceMember = await prisma.spaceMember.findUnique({
+            where: {
+                userId_spaceId: {
+                    userId,
+                    spaceId
+                }
+            }
+        })
+
+        if (!haveSpaceMember) {
+            return {success:false}
+        }
+    } catch (error) {
+        
+    }
+    
+}
+
 export async function getSpaceByUserId(userId) {
     try {
         const spaces = await prisma.space.findMany({
@@ -103,6 +124,26 @@ export async function getSpaceByUserId(userId) {
         return { success: false, message: "Something went wrong while fetching spaces", error: error.message };
     }
 }
-export async function editProfile(params) {
+
+export async function getOwnerFromSpaceId(spaceId) {
+    try {
+        const owner = await prisma.space.findUnique({
+            where: {
+                id:spaceId
+            },
+            include: {
+                creator:true 
+            }
+        })
+
+        if(!owner){
+            return { success: false, message: "Unable to find the owner of the space", data:null}
+        }
+        return {success :true, message:"Successfullt fetched the owner ", data:owner}
+    } catch (error) {
+        return { success: false, message: "Something went wrong while fetching the owner", error:error.message }
+
+    }
     
 }
+

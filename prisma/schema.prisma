@@ -164,7 +164,8 @@ model Follows {
   follower  User @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
   following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
 
-  @@id([followerId, followingId]) // Composite primary key prevents duplicate follows
+  @@id([followerId, followingId]) 
+  @@unique([followerId, followingId])
 }
 
 model Notification {
