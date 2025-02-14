@@ -52,10 +52,12 @@ export async function getSpaceById(spaceId) {
         const space = await prisma.space.findUnique({
             where: { id: spaceId },
             include: {
+                creator:true,
                 _count: {
                     select: {
                         members: true,
-                        questions:true
+                        questions: true
+                        
                    }
                }
            }
@@ -194,8 +196,6 @@ export async function editSpaceDetails(spaceId, name, description, image1, image
         return { success: false, message: "An error occurred while updating space details.", error: error.message };
     }
 }
-
-
 export async function getFollowersOfSpace(spaceId) {
     try {
         const users = await prisma.spaceMember.findMany({
