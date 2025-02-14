@@ -194,3 +194,22 @@ export async function editSpaceDetails(spaceId, name, description, image1, image
         return { success: false, message: "An error occurred while updating space details.", error: error.message };
     }
 }
+
+
+export async function getFollowersOfSpace(spaceId) {
+    try {
+        const users = await prisma.spaceMember.findMany({
+            where: {
+                spaceId: spaceId
+            },
+            include: {
+                user: true
+            }
+        });
+
+        return { success: true, message: "Followers retrieved successfully", data: users };
+    } catch (error) {
+        console.error("Error fetching followers:", error);
+        return { success: false, message: "Failed to retrieve followers", error: error.message };
+    }
+}

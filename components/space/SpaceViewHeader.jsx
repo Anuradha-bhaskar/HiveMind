@@ -5,7 +5,7 @@ import ShareBtn from "./ShareBtn";
 import { currentUser } from '@clerk/nextjs/server';
 import { checkSpaceFollowing } from "@/actions/spaceActions";
 import SpaceFollowBtn from "./SpaceFollowBtn";
-
+import ScrollableFollowers from "./ScrollableFollowers";
 async function SpaceViewHeader({ spaceId }) {
     const result = await getSpaceById(spaceId);
     if (!result.success) {
@@ -98,6 +98,8 @@ async function SpaceViewHeader({ spaceId }) {
                     </p>
                 </div>
             </div>
+
+            <ScrollableFollowers spaceId={spaceId}/>
         </div>
     );
 };
