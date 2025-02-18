@@ -5,8 +5,8 @@ import ShareBtn from "./ShareBtn"
 import { currentUser } from "@clerk/nextjs/server"
 import { checkSpaceFollowing } from "@/actions/spaceActions"
 import SpaceFollowBtn from "./SpaceFollowBtn"
+import { UserRound, CalendarDays } from "lucide-react"
 
-import { User, Users, MessageSquare, CalendarDays, Share2, Edit } from "lucide-react";
 async function SpaceViewHeader({ spaceId }) {
     const result = await getSpaceById(spaceId)
     if (!result.success) {
@@ -49,7 +49,7 @@ async function SpaceViewHeader({ spaceId }) {
                 </div>
 
                 {/* Profile Image Container - Centered in Mobile View */}
-                <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 sm:left-8 sm:translate-x-0">
+                <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 sm:left-8 sm:translate-x-0 z-10 mb-4">
                     <div className="relative w-32 h-32 sm:w-40 sm:h-40">
                         <div className="absolute inset-0">
                             <img
@@ -64,66 +64,61 @@ async function SpaceViewHeader({ spaceId }) {
                     </div>
                 </div>
             </div>
-
-            {/* Content Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="pt-20 md:pl-48 pb-8">
-                    {/* Header Content */}
-                    <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                        <div className="space-y-4 max-w-full">
-                            {/* Title and Creator Info */}
-                            <div className="space-y-2">
-                                <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-2">
-                                    Featured Space
+            <div className="min-h-[200px] relative bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="pt-12 md:pt-16 pb-8">
+                        <div className="flex flex-col gap-6 md:gap-8">
+                            {/* Title and Creator Section */}
+                            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight break-words">
+                                        {space.name}
+                                    </h1>
+                                    <div className="mt-2 flex items-center gap-1.5 text-muted-foreground">
+                                        <UserRound className="w-4 h-4 flex-shrink-0" />
+                                        <span className="text-sm">Created by</span>
+                                        <span className="text-sm font-medium text-foreground hover:text-primary cursor-pointer transition-colors">
+                                            {space.creator.name}
+                                        </span>
+                                    </div>
                                 </div>
-                                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight break-words text-foreground">
-                                    {space.name}
-                                </h1>
-                                <div className="flex items-center gap-2 text-muted-foreground">
-                                    <User className="w-4 h-4" />
-                                    <span className="text-sm font-medium">Created by</span>
-                                    <span className="text-base font-semibold text-primary transition-colors duration-200 hover:text-primary/90 cursor-pointer">
-                                        {space.creator.name}
-                                    </span>
+
+                                {/* Action Buttons */}
+                                <div className="flex items-center gap-2">
+                                    {spaceOwnerId === viewUser.message.id ? (
+                                        <EditProfileSection spaceId={spaceId} />
+                                    ) : (
+                                        <SpaceFollowBtn
+                                            isFollowing={isFollowing}
+                                            userId={viewUser.message.id}
+                                            spaceId={spaceId}
+                                        />
+                                    )}
+                                    <ShareBtn />
                                 </div>
                             </div>
 
                             {/* Stats Section */}
-                            <div className="flex items-center gap-6 pt-2">
-                                <div className="flex items-center gap-2 group cursor-pointer">
-                                    <Users className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
-                                    <div className="flex flex-col">
-                                        <span className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-200">
-                                            {space._count.members.toLocaleString()}
-                                        </span>
-                                        <span className="text-sm text-muted-foreground">Followers</span>
-                                    </div>
+                            <div className="flex flex-wrap items-center gap-6 md:gap-8 text-sm">
+                                <div className="flex flex-col">
+                                    <span className="text-xl md:text-2xl font-bold text-foreground">
+                                        {space._count.members.toLocaleString()}
+                                    </span>
+                                    <span className="text-muted-foreground">Following</span>
                                 </div>
 
-                                <div className="flex items-center gap-2 group cursor-pointer">
-                                    <MessageSquare className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
-                                    <div className="flex flex-col">
-                                        <span className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-200">
-                                            {space._count.questions.toLocaleString()}
-                                        </span>
-                                        <span className="text-sm text-muted-foreground">Posts</span>
-                                    </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xl md:text-2xl font-bold text-foreground">
+                                        {space._count.questions.toLocaleString()}
+                                    </span>
+                                    <span className="text-muted-foreground">Posts</span>
                                 </div>
 
-                                <div className="flex items-center gap-2 text-muted-foreground">
-                                    <CalendarDays className="w-5 h-5" />
-                                    <span className="text-sm">Created {new Date(space.createdAt).toLocaleDateString()}</span>
+                                <div className="flex items-center gap-1.5 text-muted-foreground">
+                                    <CalendarDays className="w-4 h-4" />
+                                    <span>Created {new Date(space.createdAt).toLocaleDateString()}</span>
                                 </div>
                             </div>
-                        </div>
-                        {/* Action Buttons */}
-                        <div className="flex items-center gap-3 sm:ml-auto">
-                            {spaceOwnerId === viewUser.message.id ? (
-                                <EditProfileSection spaceId={spaceId} />
-                            ) : (
-                                <SpaceFollowBtn isFollowing={isFollowing} userId={viewUser.message.id} spaceId={spaceId} />
-                            )}
-                            <ShareBtn />
                         </div>
                     </div>
                 </div>
