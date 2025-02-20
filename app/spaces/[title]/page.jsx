@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 function Page({ params }) {
   const [title, setTitle] = useState("");
   const [selected, setSelected] = useState("Questions");
-  const [space,setSpace]=useState({})
+  const [space,setSpace] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function fetchData() {
       const { title } = await params;
@@ -16,19 +18,34 @@ function Page({ params }) {
   }, [params]);
 
   useEffect(() => {
-    const fetchData = async() => {
-      const result = await getSpaceById(title);;
+    const fetchData = async () => {
+setLoading(true);
+      const result = await getSpaceById(title);
       if (result.success) {
-        setSpace(result.data)
+        setSpace(result.data);
       } else {
-        setSpace({})
+        setSpace(null);
       }
-    }
+    setLoading(false);
+    };
     fetchData();
+}, [title]);
 
-    
-  })
+  if (loading) {
+    return (
+      <div className="flex mt-32 justify-center h-screen bg-white">
+        <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
+  if (!space) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-gray-600">
+        <p className="text-lg font-semibold">Nothing here</p>
+      </div>
+    );
+  }
   
   return (
     <div>
