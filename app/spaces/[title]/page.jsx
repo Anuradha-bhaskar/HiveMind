@@ -28,6 +28,8 @@ function Page({ params }) {
 
     
   })
+
+  
   return (
     <div>
 

@@ -33,12 +33,11 @@ model User {
   likes         Like[]
   followers     Follows[]      @relation("following")
   following     Follows[]      @relation("follower")
-  notifications Notification[] @relation("userNotifications")
   tags          Tag[] // Tags user likes for content discovery
   savedBlogs    SavedBlog[] // Blogs saved by the user
   spaces        Space[] // Spaces created by the user
   spaceMembers  SpaceMember[]
-  Notification  Notification[]
+ 
 }
 
 model Blog {
@@ -56,7 +55,7 @@ model Blog {
   comments     Comment[]
   likes        Like[]
   savedBy      SavedBlog[]
-  Notification Notification[]
+
 }
 
 model SavedBlog {
@@ -75,9 +74,7 @@ model SavedBlog {
 model Question {
   id        String   @id @default(cuid())
   authorId  String
-  title     String
   content   String
-  image     String? // Optional image for the question
   spaceId   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,10 +82,7 @@ model Question {
   // Relations
   author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
   space        Space?         @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-  tags         Tag[] // Tags associated with the question
   comments     Comment[]
-  likes        Like[]
-  Notification Notification[]
 }
 
 model Comment {
@@ -105,7 +99,7 @@ model Comment {
   blog         Blog?          @relation(fields: [blogId], references: [id], onDelete: Cascade)
   question     Question?      @relation(fields: [questionId], references: [id], onDelete: Cascade)
   likes        Like[] // Likes on comments or answers
-  Notification Notification[]
+ 
 }
 
 model Like {
@@ -119,7 +113,6 @@ model Like {
   // Relations
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   comment  Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   @@unique([userId, blogId, questionId, commentId]) // Prevent duplicate likes
@@ -168,26 +161,7 @@ model Follows {
   @@unique([followerId, followingId])
 }
 
-model Notification {
-  id         String           @id @default(cuid())
-  userId     String
-  creatorId  String
-  type       NotificationType
-  read       Boolean          @default(false)
-  blogId     String?
-  questionId String?
-  commentId  String?
-  createdAt  DateTime         @default(now())
 
-  // Relations
-  user     User      @relation("userNotifications", fields: [userId], references: [id], onDelete: Cascade)
-  creator  User      @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  comment  Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
-
-  @@index([userId, createdAt]) // Add an index on userId and createdAt
-}
 
 enum Tag {
   MOVIE

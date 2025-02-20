@@ -10,7 +10,7 @@ async function ScrollableFollowers({ spaceId }) {
 
     return (
         <div className="min bg-background flex items-center justify-center">
-            <div className="w-[350px] h-[400px] border rounded-lg shadow-lg bg-card">
+            <div className="w-[380px] h-[400px] border rounded-lg shadow-lg bg-card">
                 <div className="p-3">
                     <h2 className="text-lg font-semibold mb-2">Followers</h2>
                     <Separator className="mb-3" />
