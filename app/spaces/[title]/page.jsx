@@ -2,13 +2,13 @@
 import { getSpaceById } from "@/actions/spaceActions";
 import AboutPage from "@/components/space/AboutPage";
 import { useState, useEffect } from "react";
+import QuestionsPage from "@/components/space/QuestionsPage";
 
 function Page({ params }) {
   const [title, setTitle] = useState("");
   const [selected, setSelected] = useState("Questions");
-  const [space,setSpace] = useState(null);
+  const [space, setSpace] = useState({})
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     async function fetchData() {
       const { title } = await params;
@@ -19,34 +19,35 @@ function Page({ params }) {
 
   useEffect(() => {
     const fetchData = async () => {
-setLoading(true);
+      setLoading(true);
       const result = await getSpaceById(title);
       if (result.success) {
         setSpace(result.data);
       } else {
         setSpace(null);
       }
-    setLoading(false);
+      setLoading(false);
     };
     fetchData();
-}, [title]);
+  }, [title]);
+
 
   if (loading) {
     return (
-      <div className="flex mt-32 justify-center h-screen bg-white">
-        <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-gray-800"></div>
       </div>
     );
   }
 
+
   if (!space) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen text-gray-600">
-        <p className="text-lg font-semibold">Nothing here</p>
-      </div>
-    );
+    <div className="flex flex-col items-center justify-center min-h-screen text-black">
+      <p className="text-lg font-semibold">Nothing here</p>
+    </div>
   }
-  
+
+
   return (
     <div>
 
@@ -68,7 +69,7 @@ setLoading(true);
 
       {/* Conditionally Render Content */}
       <div className="mt-4">
-        {selected === "Questions" && <div>Posts Content</div>}
+        {selected === "Questions" && <QuestionsPage/>}
         {selected === "About" && <AboutPage space={space} />}
       </div>
     </div>
