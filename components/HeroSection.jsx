@@ -15,12 +15,12 @@ function HeroSection() {
                         Discover insights, tips, and trends to fuel your creativity and success.
                     </p>
 
-                    <div className="w-[35%] flex justify-end">
+                    <div className="w-[35%]  sm:hidden flex justify-end">
                         <OrbitingTexts />
                     </div>
                 </div>
             </div>
-            <div className='hidden lg:block lg:mr-20'>
+            <div className='hidden sm:block lg:mr-20'>
                 <OrbitingTexts />
             </div>
         </div>
