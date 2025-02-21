@@ -14,7 +14,7 @@ function Page() {
         <div>
             {/* Navigation Buttons */}
             <div className="flex border-b border-gray-300">
-                {["Your Blogs", "Saved Blogs", "Created Spaces", "Subscribed Spaces"].map((tab) => (
+                {["Your Blogs", "Saved Blogs"].map((tab) => (
                     <button
                         key={tab}
                         onClick={() => setSelected(tab)}
@@ -32,8 +32,6 @@ function Page() {
             <div className="mt-4">
                 {selected === "Your Blogs" && <YourBlogs userId={user.id} />}
                 {selected === "Saved Blogs" && <SavedBlogs userId={user.id} />}
-                {selected === "Created Spaces" && <div>Created spaces</div>}
-                {selected === "Subscribed Spaces" && <div>Subscribed spaces</div>}
             </div>
         </div>
     );

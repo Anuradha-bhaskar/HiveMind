@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import { SignedIn, SignInButton, SignOutButton, SignUpButton, useUser } from "@clerk/nextjs";
 
 function MobileNavbar() {
-    const { isSignedIn } = useUser();
+    const { isSignedIn, user } = useUser();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -52,10 +52,11 @@ function MobileNavbar() {
                                         <SquarePen size={20} /> Write
                                     </Button>
                                 </Link>
-                              
-                                <Link href="/profile" onClick={() => setIsOpen(false)}>
-                                    <Button variant="ghost" className='w-full justify-start gap-2'>
-                                        <CircleUser size={20} /> Profile
+
+                                <Link href={`/profile/${user.emailAddresses[0].emailAddress.split("@")[0]}`}>
+                                    <Button variant={"ghost"}>
+                                        <CircleUser />
+                                        Profile
                                     </Button>
                                 </Link>
                             </nav>

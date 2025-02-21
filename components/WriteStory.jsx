@@ -306,28 +306,7 @@ const WriteStory = ({username}) => {
                             >
                                 <Underline className="h-4 w-4" />
                             </Button>
-                            <div className="w-px h-6 bg-gray-200 mx-2" />
-                            <Button
-                                variant="outline"
-                                onClick={() => applyCommand("insertOrderedList")}
-                                className="hover:bg-gray-100"
-                            >
-                                <ListOrdered className="h-4 w-4" />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                onClick={() => applyCommand("insertUnorderedList")}
-                                className="hover:bg-gray-100"
-                            >
-                                <List className="h-4 w-4" />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                onClick={() => applyCommand("formatBlock", "pre")}
-                                className="hover:bg-gray-100"
-                            >
-                                <Code className="h-4 w-4" />
-                            </Button>
+                       
                         </div>
 
                     </div>

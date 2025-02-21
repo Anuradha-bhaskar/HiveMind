@@ -18,7 +18,7 @@ async function RightProfile({ user }) {
             )}
 
             {/* User Details */}
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold ">{user.name || 'Not given'}</h1>
                 <p className="text-md text-gray-600 -mt-2">@{user.username}</p>
                 <div className="flex gap-4 mt-2">

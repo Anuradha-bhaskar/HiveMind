@@ -250,7 +250,7 @@ export async function getCategoryAndSortedBlogs(sort, category) {
 
         return { success: true, message: "Successfully fetched the blogs", data: blogs };
     } catch (error) {
-        console.error("Error fetching blogs:", error.message);
+        console.log("Error fetching blogs:", error.message);
         return { success: false, message: "Failed to fetch the blogs" };
     }
 }
