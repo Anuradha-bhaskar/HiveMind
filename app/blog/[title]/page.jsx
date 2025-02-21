@@ -15,7 +15,7 @@ async function page({ params }) {
   const route =await  params.title;
   const arrayOfRoute = route.split("-");
   const blogId = arrayOfRoute[arrayOfRoute.length - 1];
-  console.log("Blog id will be: ", blogId);
+  // console.log("Blog id will be: ", blogId);
   // Fetch comments on the server side
   const resultC = await getComments(blogId);
   const comments = resultC.success ? resultC.message : [];
@@ -41,15 +41,12 @@ async function page({ params }) {
     console.error("Error fetching userId:", error);
   }
 
-
-
   const scrollToComment = () => {
     const sectionB = document.getElementById("component-b");
     if (sectionB) {
       sectionB.scrollIntoView({ behavior: "smooth" });
     }
   };
-
   return (
     <div className="min-h-screen flex justify-center items-start">
       <div className="w-full max-w-4xl px-4 py-8 bg-white">

@@ -1,7 +1,6 @@
 "use server"
 import { auth } from "@clerk/nextjs/server";
 import { currentUser } from "@clerk/nextjs/server";
-import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 export async function syncAction() {
     try {
@@ -177,7 +176,7 @@ export async function checkFollowing(userId, authorId) {
 
         return { success: true, isFollowing: !!result }; 
     } catch (error) {
-        console.error("Error checking follow status");
+        console.log("Error checking follow status");
         return { success: false, message: "Something went wrong while checking following" };
     }
 }

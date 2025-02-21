@@ -54,7 +54,7 @@ function BlogActions({ userId, blogId }) {
             const result = await toggleBlogLike(userId, blogId);
             if (result.success) {
                 setLiked(!liked)
-                toast.success(result.message)
+                // toast.success(result.message)
             }
         } catch (error) {
             toast.error("Something went wrong while liking the blog")

@@ -1,19 +1,19 @@
 "use client"
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
-import Link from 'next/link';
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Search } from "lucide-react"
+import Link from "next/link"
 
 function SearchComp() {
-    const [search, setSearch] = useState("");
-
+    const [search, setSearch] = useState("")
     return (
-        <div className="relative w-full max-w-4xl my-4 mx-auto bg-background">
+        <div className="relative w-full max-w-4xl my-4 mx-auto bg-background ">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-3xl" />
             <div className="relative border-2 border-dashed border-primary/20 rounded-3xl backdrop-blur-sm">
-                <div className="flex items-center justify-between px-4 py-1">
+                <div className="flex flex-col md:flex-row items-center justify-between px-4 py-2 md:py-1">
                     {/* Search Input with Button */}
-                    <div className="relative w-64 flex items-center">
+                    <div className="relative w-full md:w-64 flex items-center mb-2 md:mb-0">
                         <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                         <input
                             type="text"
@@ -24,18 +24,15 @@ function SearchComp() {
                         />
                         <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
                             <Link href={`/blog/category/${search}`}>
-                                <Button
-                                    size="sm"
-                                    className="h-7 px-3"
-                                >
+                                <Button size="sm" className="h-7 px-3">
                                     Search
                                 </Button>
                             </Link>
                         </div>
                     </div>
 
-                    {/* Categories */}
-                    <div className="flex space-x-4">
+                    {/* Categories - Hidden on mobile */}
+                    <div className="hidden md:flex space-x-4">
                         <Link href="/">
                             <Button variant="ghost" className="hover:bg-secondary">
                                 All Blogs
@@ -60,7 +57,8 @@ function SearchComp() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default SearchComp;
+export default SearchComp
+

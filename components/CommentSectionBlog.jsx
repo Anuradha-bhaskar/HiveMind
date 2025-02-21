@@ -35,10 +35,8 @@ function CommentSectionBlog({ blogId, userId, comments }) {
                         return comment;
                     })
                 );
-                toast.success("Like toggled");
-            } else {
-                toast.error("Error toggling like");
-            }
+                // toast.success("Like toggled");
+            } 
         } catch (error) {
             toast.error("Error toggling like");
             console.error("Error in like function:", error);
