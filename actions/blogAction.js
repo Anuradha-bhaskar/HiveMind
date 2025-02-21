@@ -65,11 +65,11 @@ export async function getBlogById(params) {
 export async function postComments(params) {
 
     try {
-        const { authorId, blogId, comment } = params;
-        console.log("-- inside the try and catch : ", { authorId, blogId, comment })
+        const { userId, blogId, comment } = params;
+        // console.log("-- inside the try and catch : ", { userId, blogId, comment })
         const commentc = await prisma.comment.create({
             data: {
-                authorId: authorId,
+                authorId: userId,
                 blogId: blogId,
                 content: comment,
                 isAnswer: false

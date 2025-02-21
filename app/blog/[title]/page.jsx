@@ -58,7 +58,7 @@ async function page({ params }) {
         <AuthorInBlog authorId={authorId} userId={userId} />
         
         <ImageAndBlog imageUrl={image} blog={content} />
-        <BlogComment authorId={authorId} blogId={id} />
+        <BlogComment userId={userId} blogId={id} />
         {/* Pass userId to CommentSectionBlog */}
         <CommentSectionBlog blogId={id} userId={userId} comments={comments} />
       </div>

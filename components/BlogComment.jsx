@@ -6,18 +6,15 @@ import { Textarea } from './ui/textarea'
 import { postComments } from '@/actions/blogAction'
 
 import toast from 'react-hot-toast'
-function BlogComment({ authorId, blogId }) {
+function BlogComment({ userId, blogId }) {
   
-    console.log("Author id and blog id in blog comment:", { authorId, blogId })
+    // console.log("Author id and blog id in blog comment:", { userId, blogId })
     const [comment, setComment] = useState('');
-    
-
 const handlePostComment = async (e) => {
     e.preventDefault();
     try {
-        const result = await postComments({ authorId, blogId, comment });
-        
-        if(result.success) {
+        const result = await postComments({ userId, blogId, comment });
+        if(result && result.success) {
             toast.success(result.message);
             window.location.reload();
         } else {
