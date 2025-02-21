@@ -27,12 +27,10 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body>
           <div className="min-h-screen bg-white">
-            
             <Navbar />
             <main className=""> 
                     {children}
                     <Toaster />
-                
             </main>
 
           </div>

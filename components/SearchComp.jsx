@@ -9,8 +9,8 @@ function SearchComp() {
     const [search, setSearch] = useState("")
     return (
         <div className="relative w-full max-w-4xl my-4 mx-auto bg-background ">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-3xl" />
-            <div className="relative border-2 border-dashed border-primary/20 rounded-3xl backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10  md:rounded-3xl" />
+            <div className="relative border-2 border-dashed border-primary/20 md:rounded-3xl backdrop-blur-sm">
                 <div className="flex flex-col md:flex-row items-center justify-between px-4 py-2 md:py-1">
                     {/* Search Input with Button */}
                     <div className="relative w-full md:w-64 flex items-center mb-2 md:mb-0">

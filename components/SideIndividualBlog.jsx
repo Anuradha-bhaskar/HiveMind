@@ -5,7 +5,7 @@ function SideIndividualBlog({ imageUrl, title, tag, date,id }) {
     return (
 
         <Link href={`/blog/${title.toLowerCase().split(" ").join("-")}-${id}`}>
-        <div className="flex items-start space-x-4 mb-2">
+        <div className="flex items-start space-x-4 mb-2 sm:px-4 px-2">
                 <div className="min-w-[180px] h-[100px] relative overflow-hidden rounded-lg bg-gray-200 flex items-center justify-center">
                     <Image
                         src={imageUrl || "/placeholder.svg"}
