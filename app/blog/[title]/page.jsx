@@ -26,7 +26,7 @@ async function page({ params }) {
     return <div>No blog found</div>;
   }
   const blogData = result.message;
-  const { id, authorId, title, content, image, updatedAt, tags } = blogData;
+  const { id, authorId, title, content, image, updatedAt, tags,video } = blogData;
 
   // Fetch the current user and resolve their userId
   let userId = null;
@@ -54,7 +54,7 @@ async function page({ params }) {
         <BlogActions userId={ userId} blogId={blogId} />
         <AuthorInBlog authorId={authorId} userId={userId} />
         
-        <ImageAndBlog imageUrl={image} blog={content} />
+        <ImageAndBlog imageUrl={image} video={video}  blog={content} />
         <BlogComment userId={userId} blogId={id} />
         {/* Pass userId to CommentSectionBlog */}
         <CommentSectionBlog blogId={id} userId={userId} comments={comments} />
