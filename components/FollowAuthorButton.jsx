@@ -15,7 +15,7 @@ function FollowAuthorButton({ userId, authorId ,isFollowing}) {
             const result = await toggleFollow(userId, authorId);
             if (result.success) {
                 setIsFollowing1(!isFollowing1)
-                toast.success(isFollowing1 ? "Unfollowed successfully" : "Followed successfully")
+                toast.success("TOggle follow successfully")
             } else {
                 toast.error("Something went wrong in the follow button")
             }
