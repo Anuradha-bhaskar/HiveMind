@@ -1,28 +1,39 @@
 "use server"
 import prisma from "@/lib/prisma"
 import cloudinary from "@/lib/cloudinary"
-import {  userByUsername } from "./userActions";
-import {  currentUser } from "@clerk/nextjs/server";
+import { userByUsername } from "./userActions";
+import { currentUser } from "@clerk/nextjs/server";
 
-export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags, base64Image, username) {
-
-
+export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags, base64Image, username, formData) {
     try {
-
+        console.log('formdata : ',formData)
         const resultuser = await userByUsername(username);
         const result = await cloudinary.uploader.upload(base64Image, {
             resource_type: 'image',
         });
-    
 
 
-        // console.log("Blog Payload Debug:", {
-        //     tags: selectedTags,
-        //     authorId: resultuser.message.id,
-        //     title: storyTitle,
-        //     image: result.secure_url,
-        //     content: content,
-        // });
+        let videoUrl = "";
+        if (formData) {
+            const file = formData.get('videoFile');
+            console.log("file ",file)
+            if (file) {  // Add this check
+                try {
+                    const buffer = Buffer.from(await file.arrayBuffer());
+                    console.log("Buffer : ",buffer)
+                    const base64Image = `data:${file.type};base64,${buffer.toString('base64')}`;
+                    const response = await cloudinary.uploader.upload(base64Image, {
+                        resource_type: 'video',
+                        public_id: 'my_video',
+                    });
+                    videoUrl = response.secure_url;
+                } catch (error) {
+                    console.log("Error uploading video:", error);
+                }
+            }
+        }
+        console.log("done video")
+        console.log("vidoe url : ",videoUrl)
 
         const Blog = await prisma.blog.create({
             data: {
@@ -30,16 +41,19 @@ export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags
                 authorId: resultuser.message.id,
                 title: storyTitle,
                 image: result.secure_url,
-                content: content
+                content: content,
+                video: videoUrl || null,
             }
-        })
+        });
+
         if (Blog) {
-            return { success: true, message: "Blog created successfully" }
+            return { success: true, message: "Blog created successfully" };
         }
 
+
     } catch (error) {
-        console.log("Error,", error)
-        return { success: false, message: "Something went wrong while creating blogs" }
+       
+        return { success: false, message: "Something went wrong while creating blogs" };
     }
 }
 
@@ -153,7 +167,7 @@ export async function toggleCommentLike(params) {
     }
 }
 
-export async function checkLikedBlog( userId, blogId ) {
+export async function checkLikedBlog(userId, blogId) {
     try {
         const result = await prisma.like.findFirst({ where: { userId: userId, blogId: blogId } })
         if (result) {
@@ -166,12 +180,12 @@ export async function checkLikedBlog( userId, blogId ) {
         console.log("something went wrong while checking liked")
         return { success: false }
     }
-    
+
 }
 
 export async function toggleBlogLike(userId, blogId) {
     try {
-        
+
         const existingLike = await prisma.like.findFirst({
             where: {
                 userId: userId,
@@ -199,7 +213,7 @@ export async function toggleBlogLike(userId, blogId) {
         return { success: false, message: "Something went wrong while toggling like" }
 
     }
-    
+
 }
 
 export async function getYourBlogs(userId) {
@@ -225,9 +239,9 @@ export async function getCategoryAndSortedBlogs(sort, category) {
         let orderBy = { createdAt: "desc" };
 
         if (sort === "newest") {
-            orderBy = { createdAt: "desc" }; 
+            orderBy = { createdAt: "desc" };
         } else if (sort === "most-popular") {
-            orderBy= [
+            orderBy = [
                 {
                     createdAt: "desc" // Default sorting, can be adjusted based on your needs
                 },
