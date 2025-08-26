@@ -13,7 +13,7 @@ export async function fetchBlogsForInfinte(prev,limit) {
     } catch (error) {
         return { success: false, message: "Something went wrong while fetching" }
 
-        console.log("Error in the blogs page of the infinite scroll thing")
+        // console.log("Error in the blogs page of the infinite scroll thing")
     }
     
 }

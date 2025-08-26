@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { LogOut, CircleUser, Bell, Home, UsersRound, SquarePen, Menu, X } from 'lucide-react';
+import { LogOut, CircleUser,  Home,  SquarePen, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { SignedIn, SignInButton, SignOutButton, SignUpButton, useUser } from "@clerk/nextjs";
@@ -42,11 +42,7 @@ function MobileNavbar() {
                                         <Home size={20} /> Home
                                     </Button>
                                 </Link>
-                                <Link href="/spaces" onClick={() => setIsOpen(false)}>
-                                    <Button variant="ghost" className='w-full justify-start gap-2'>
-                                        <UsersRound size={20} /> Spaces
-                                    </Button>
-                                </Link>
+                                
                                 <Link href="/new-story" onClick={() => setIsOpen(false)}>
                                     <Button variant="ghost" className='w-full justify-start gap-2'>
                                         <SquarePen size={20} /> Write

@@ -6,15 +6,13 @@ import SavedBlogs from "@/components/SavedBlogs";
 import { useUser } from "@/contexts/UserContext";
 
 function Page() {
-    const [selected, setSelected] = useState("Your Blogs");
+    const [selected, setSelected] = useState("Blogs");
     const user = useUser();
-    // console.log("User in the page.jsx", user);
-
+    
     return (
         <div>
-            {/* Navigation Buttons */}
             <div className="flex border-b border-gray-300">
-                {["Your Blogs", "Saved Blogs"].map((tab) => (
+                {["Blogs", "Saved Blogs"].map((tab) => (
                     <button
                         key={tab}
                         onClick={() => setSelected(tab)}
@@ -30,7 +28,7 @@ function Page() {
 
             {/* Conditionally Render Component */}
             <div className="mt-4">
-                {selected === "Your Blogs" && <YourBlogs userId={user.id} />}
+                {selected === "Blogs" && <YourBlogs userId={user.id} />}
                 {selected === "Saved Blogs" && <SavedBlogs userId={user.id} />}
             </div>
         </div>

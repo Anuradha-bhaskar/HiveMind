@@ -42,7 +42,7 @@ function YourBlogs({ userId }) {
 
   if (blogs.length === 0) {
     return (
-      <div className="flex items-center justify-center h-screen text-gray-500 text-lg">
+      <div className="flex  justify-center h-screen text-gray-500 text-lg">
         No blogs
       </div>
     );

@@ -30,7 +30,7 @@ export async function syncAction() {
 
         if (newUser) {
 
-            console.log("new User : ", newUser)
+            // console.log("new User : ", newUser)
 
             return { success: true, message: "User created successfully" }
         }
@@ -44,9 +44,9 @@ export async function syncAction() {
 export async function userByUsername(params) {
     try {
         const username = params
-        console.log(username)
+        // console.log(username)
         if (!username) {
-            console.log("username not found")
+            // console.log("username not found")
             return { success: false, message: "Username have not received " }
         }
         const user = await prisma.user.findUnique({
@@ -78,7 +78,7 @@ export async function userByUsername(params) {
 export async function userById(params) {
     try {
         const id =params 
-        console.log(id)
+        // console.log(id)
         if (!id) {
             console.log("id not found")
             return { success: false, message: "not id received" }
@@ -112,7 +112,7 @@ export async function userByClerkId(params) {
         const clerkId = params
     //    console.log("clerk id",clerkId)
         if (!clerkId) {
-            console.log("clerkId not found")
+            // console.log("clerkId not found")
             return { success: false, message: "clerkId not found" }
         }
         const user = await prisma.user.findUnique({

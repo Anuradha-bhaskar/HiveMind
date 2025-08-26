@@ -1,10 +1,9 @@
 import React from 'react'
 import Link from 'next/link';
-import { CircleUser, Bell, Home } from 'lucide-react';
-import { SignedIn, UserButton, SignInButton, SignedOut, SignUpButton } from "@clerk/nextjs";
+import { CircleUser,  Home } from 'lucide-react';
+import { SignedIn, UserButton, SignInButton,  SignUpButton } from "@clerk/nextjs";
 import { currentUser } from '@clerk/nextjs/server'
 import { Button } from './ui/button';
-import { UsersRound } from 'lucide-react';
 
 
 async function DesktopNavbar() {
@@ -20,12 +19,7 @@ async function DesktopNavbar() {
                             Home
                         </Button>
                     </Link>
-                    <Link href={"/spaces"}>
-                        <Button variant={"ghost"}>
-                            <UsersRound />
-                            Spaces 
-                        </Button>
-                    </Link>
+
 
                 
                     <Link href={`/profile/${user.emailAddresses[0].emailAddress.split("@")[0]}`}>

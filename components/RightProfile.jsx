@@ -1,14 +1,25 @@
 import React from 'react';
 
 import EditDialog from './EditDialog';
+import { currentUser } from '@clerk/nextjs/server';
+import { userByClerkId } from '@/actions/userActions';
+import { checkFollowing } from '@/actions/userActions';
+
 
 async function RightProfile({ user }) {
-    
-   
 
+    const pageUser = await currentUser();
+    let followingUser = null;
+    let isFollowing = false;
+    if (pageUser) {
+        followingUser = await userByClerkId(pageUser.id);
+        let { isFollowing } = await checkFollowing(followingUser.message.id, user.id);
+        isFollowing = isFollowing;
+    }
+   
     return (
         <div className="flex flex-wrap items-center gap-6 p-6 sticky">
-            {/* User Image */}
+         
             {user.image && (
                 <img
                     src={user.image}
@@ -17,7 +28,6 @@ async function RightProfile({ user }) {
                 />
             )}
 
-            {/* User Details */}
             <div className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold ">{user.name || 'Not given'}</h1>
                 <p className="text-md text-gray-600 -mt-2">@{user.username}</p>
@@ -31,7 +41,6 @@ async function RightProfile({ user }) {
                 </div>
             </div>
 
-            {/* Additional Info */}
             <div className="flex flex-col  text-left ">
                 <p className="text-sm text-gray-800  font-sans font-normal">
                     <strong>Bio : </strong> {user.bio || 'Not given'}
@@ -54,7 +63,11 @@ async function RightProfile({ user }) {
                 </p>
 
             </div>
-            <EditDialog user={user} />
+
+             {
+                                   pageUser && followingUser.message.id === user.id && (
+                                       <EditDialog user={user} />
+                                   )}
            
         </div>
     );

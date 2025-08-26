@@ -12,11 +12,10 @@ import {
     X,
   
     Tag as TagIcon,
-    VideoOffIcon,
-    Video
+  
 } from "lucide-react";
 import toast from "react-hot-toast";
-// Tag enum
+
 const Tag = {
     MOVIE: "MOVIE",
     HORROR: "HORROR",
@@ -68,7 +67,7 @@ const WriteStory = ({username}) => {
     const [content, setContent] = useState("");
     const [storyTitle, setStoryTitle] = useState("");
     const [image, setImage] = useState(null);
-    const[video , setVideo]=useState(null)
+    
     const [selectedTags, setSelectedTags] = useState([]);
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -102,10 +101,7 @@ const WriteStory = ({username}) => {
                 }
             }
 
-            if (video) {
-                formData.append("videoFile", video);
-            }
-
+        
             // Check for content, selectedTags, and storyTitle validity
             if (!content || !selectedTags || !storyTitle) {
                 toast.error("Please fill in all required fields.");
@@ -129,7 +125,7 @@ const WriteStory = ({username}) => {
             setContent(''); 
             setContent("");
             setStoryTitle("")
-            setVideo(null)
+
             setImage(null);
             setSelectedTags([])
         }
@@ -155,13 +151,7 @@ const WriteStory = ({username}) => {
             reader.readAsDataURL(file);
         }
     };
-    const handleVideoChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setVideo(file);
-        }
-    };
-
+   
     const handleTagToggle = (tag) => {
         setSelectedTags(prev =>
             prev.includes(tag)
@@ -282,21 +272,7 @@ const WriteStory = ({username}) => {
                             <span>Upload Cover Image</span>
                         </label>
 
-                        <input
-                            type="file"
-                            onChange={handleVideoChange}
-                            accept="video/*"  // Changed from "image/*" to "video/*"
-                            className="hidden"
-                            id="video-input"
-                            name="videoFile" // Updated ID to reflect video input
-                        />
-                        <label
-                            htmlFor="video-input"  // Updated to match the new ID
-                            className="flex items-center px-4 py-2 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-                        >
-                            <Video className="h-5 w-5 mr-2" />
-                            <span>Upload Video</span>  
-                        </label>
+                       
 
                     </div>
                     {image && (

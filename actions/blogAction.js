@@ -6,7 +6,7 @@ import { currentUser } from "@clerk/nextjs/server";
 
 export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags, base64Image, username, formData) {
     try {
-        console.log('formdata : ',formData)
+        // console.log('formdata : ',formData)
         const resultuser = await userByUsername(username);
         const result = await cloudinary.uploader.upload(base64Image, {
             resource_type: 'image',
@@ -16,11 +16,11 @@ export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags
         let videoUrl = "";
         if (formData) {
             const file = formData.get('videoFile');
-            console.log("file ",file)
+            // console.log("file ",file)
             if (file) {  // Add this check
                 try {
                     const buffer = Buffer.from(await file.arrayBuffer());
-                    console.log("Buffer : ",buffer)
+                    // console.log("Buffer : ",buffer)
                     const base64Image = `data:${file.type};base64,${buffer.toString('base64')}`;
                     const response = await cloudinary.uploader.upload(base64Image, {
                         resource_type: 'video',
@@ -32,8 +32,8 @@ export async function uploadImageAndCreateBlog(storyTitle, content, selectedTags
                 }
             }
         }
-        console.log("done video")
-        console.log("vidoe url : ",videoUrl)
+        // console.log("done video")
+        // console.log("vidoe url : ",videoUrl)
 
         const Blog = await prisma.blog.create({
             data: {
@@ -127,11 +127,11 @@ export async function toggleCommentLike(params) {
     try {
         const user = await currentUser();
         const username = user.emailAddresses[0].emailAddress.split("@")[0];
-        console.log("username : ", username)
+        // console.log("username : ", username)
         const result = await userByUsername(username);
         const userId = result.message.id;
         const { commentId, blogId } = params;
-        console.log("Inside the toggle comment like", { userId, commentId, blogId })
+        // console.log("Inside the toggle comment like", { userId, commentId, blogId })
         if (!userId || !commentId || !blogId) {
             return { success: false, message: "userId, commentId, blogId is required in toggleCommentLike" }
         }
@@ -142,7 +142,7 @@ export async function toggleCommentLike(params) {
                 blogId: blogId
             }
         })
-        console.log("Existing like:", existingLike)
+        // console.log("Existing like:", existingLike)
         if (existingLike) {
             await prisma.like.delete({
                 where: {
