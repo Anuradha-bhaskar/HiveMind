@@ -8,41 +8,41 @@ import MainPageBlogComp from "./MainPageBlogComp";
 function LoaderBlog() {
     const { ref, inView } = useInView();
     const [blogs, setBlogs] = useState([]);
-    const [hasMoreBlogs, setHasMoreBlogs] = useState(true);  // Track if there are more blogs
-    const [limit, setLimit] = useState(5); // Track the limit using useState
-    const [isLoading, setIsLoading] = useState(false); // Track loading state
+    const [hasMoreBlogs, setHasMoreBlogs] = useState(true);  
+    const [limit, setLimit] = useState(5); 
+    const [isLoading, setIsLoading] = useState(false); 
 
     useEffect(() => {
         if (inView && hasMoreBlogs && !isLoading) {
-            setIsLoading(true); // Set loading state to true when fetching starts
+            setIsLoading(true);
             const fetchBlog = async () => {
                 const { message } = await fetchBlogsForInfinte(4, limit);
                 if (!message || message.length === 0) {
-                    setHasMoreBlogs(false); // No more blogs
-                    setIsLoading(false); // Stop loading
+                    setHasMoreBlogs(false);
+                    setIsLoading(false);
                     return;
                 }
 
-                // Remove any duplicate blogs based on `id`
+                
                 const newBlogs = message.filter(
                     (newBlog) => !blogs.some((blog) => blog.id === newBlog.id)
                 );
 
-                setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs]);  // Append new blogs
-                setLimit((prevLimit) => prevLimit + 5); // Increase limit by 5
-                setIsLoading(false); // Stop loading after fetching
+                setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs]);  
+                setLimit((prevLimit) => prevLimit + 5); 
+                setIsLoading(false); 
             };
 
             fetchBlog();
         }
-    }, [inView, hasMoreBlogs, limit, isLoading, blogs]); // Re-run effect when inView, hasMoreBlogs, limit, or isLoading change
+    }, [inView, hasMoreBlogs, limit, isLoading, blogs]); 
 
     return (
         <div className="px-10">
             
             <div className="flex flex-col space-y-6 justify-center items-center w-full" ref={ref}>
 
-                {/* Render blogs only after loading */}
+                
                 {blogs && blogs.length > 0 ? (
                     blogs.map((blog) => (
                         <MainPageBlogComp
@@ -57,10 +57,9 @@ function LoaderBlog() {
                         />
                     ))
                 ) : (
-                    !isLoading && <div className="mt-4 text-gray-500">No more blogs</div> // Show message if no blogs available and loading is complete
+                    !isLoading && <div className="mt-4 text-gray-500">No more blogs</div> 
                 )}
 
-                {/* Show loader while blogs are loading */}
                 {isLoading && (
                     <div className="flex space-x-2 justify-center items-center mt-4">
                         <div className="w-3 h-3 bg-black rounded-full animate-bounce"></div>

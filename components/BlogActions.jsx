@@ -14,8 +14,7 @@ function BlogActions({ userId, blogId }) {
 
 
     useEffect(() => {
-        // Check if the blog is liked by the user
-        // Check if the blog is bookmarked by the user
+        
         async function checkBookMarked() {
             const result = await checkSavedBlog(userId, blogId)
             if (result.success) {
@@ -36,30 +35,42 @@ function BlogActions({ userId, blogId }) {
 
     const handleBookMarked = async (e) => {
         e.preventDefault();
-        try {
-            const result = await toggleBookMarked(userId, blogId);
-            console.log("Result ", result)
-            if (result.success) {
-                setBookmarked(!bookmarked)
-                toast.success(result.message)
-            }
-        } catch (error) {
-            toast.error("Something went wrong while bookmarking the blog")
+
+        if (!userId) {
+            toast.error("You must be signed in to bookmark a blog");
+            return;
         }
 
-    }
+        try {
+            const result = await toggleBookMarked(userId, blogId);
+            if (result.success) {
+                setBookmarked(!bookmarked);
+                toast.success(result.message);
+            }
+        } catch (error) {
+            toast.error("Something went wrong while bookmarking the blog");
+        }
+    };
+
     const handleBlogLike = async (e) => {
         e.preventDefault();
+
+        if (!userId) {
+            toast.error("You must be signed in to like a blog");
+            return;
+        }
+
         try {
             const result = await toggleBlogLike(userId, blogId);
             if (result.success) {
-                setLiked(!liked)
-                // toast.success(result.message)
+                setLiked(!liked);
+                // toast.success(result.message);
             }
         } catch (error) {
-            toast.error("Something went wrong while liking the blog")
+            toast.error("Something went wrong while liking the blog");
         }
-    }
+    };
+
 
     const handleShare = (e) => {
         e.preventDefault();

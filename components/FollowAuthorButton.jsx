@@ -4,31 +4,43 @@ import React from 'react'
 import { ShimmerButton } from "./ui/shimmer-button";
 import toast from 'react-hot-toast';
 import { toggleFollow } from '@/actions/userActions';
-function FollowAuthorButton({ userId, authorId ,isFollowing}) {
-    const [isFollowing1, setIsFollowing1] = useState(isFollowing)
-    console.log("User id and author id in follow button", userId, authorId)
+
+function FollowAuthorButton({ userId, authorId, isFollowing }) {
+    const [isFollowingState, setIsFollowingState] = useState(isFollowing);
 
     const handleFollow = async (e) => {
         e.preventDefault();
+
+        if (!userId) {
+            toast.error("You must be signed in to follow authors");
+            return;
+        }
+
         try {
-            // console.log("Inside the follow button")
             const result = await toggleFollow(userId, authorId);
             if (result.success) {
-                setIsFollowing1(!isFollowing1)
-                toast.success(isFollowing1 ? "Unfollowed successfully" : "Followed successfully")
+                setIsFollowingState(!isFollowingState);
+                toast.success(isFollowingState ? "Unfollowed successfully" : "Followed successfully");
             } else {
-                toast.error("Something went wrong in the follow button")
+                toast.error("Something went wrong while following the author");
             }
         } catch (error) {
-            console.log("Something went wrong in the follow button")
-
+            console.error("Error in follow button:", error);
+            toast.error("Something went wrong while following the author");
         }
     }
-  return (
-      <div>
-          <ShimmerButton onClick={(e)=>handleFollow(e)} className="px-4 py-1.5">{isFollowing1?"following":"follow" }</ShimmerButton>
-    </div>
-  )
+
+    return (
+        <div>
+            <ShimmerButton
+                onClick={handleFollow}
+                className="px-4 py-1.5"
+                disabled={!userId} 
+            >
+                {isFollowingState ? "Following" : "Follow"}
+            </ShimmerButton>
+        </div>
+    )
 }
 
-export default FollowAuthorButton
+export default FollowAuthorButton;

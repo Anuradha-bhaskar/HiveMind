@@ -27,7 +27,6 @@ async function AuthorInBlog({ authorId, userId }) {
           />
         </Link>
 
-        {/* Author Details */}
         <div className="flex flex-col items-start">
           <h3 className="font-semibold text-gray-900">
             <Link href={`/profile/${author.username}`}>{author.name}</Link>
@@ -46,8 +45,6 @@ async function AuthorInBlog({ authorId, userId }) {
           </div>
         </div>
       </div>
-
-      {/* Follow Button */}
       {userId !== authorId && (
         <FollowAuthorButton userId={userId} authorId={authorId} isFollowing={isFollowing} />
       )}
